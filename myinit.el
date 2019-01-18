@@ -1,34 +1,19 @@
-#+STARTUP: overview 
-#+PROPERTY: header-args :comments yes :results silent
-* repos
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*repos][repos:1]]
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+;; repos:1 ends here
 
-#+END_SRC
-* auto-yasnippet
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*auto-yasnippet][auto-yasnippet:1]]
 (use-package auto-yasnippet
 :ensure t)
-#+END_SRC
-* Autocomplete
-  #+BEGIN_SRC emacs-lisp  :tangle no
-     (use-package auto-complete 
-     :ensure t
-     :init
-     (progn
-     (ac-config-default)
-       (global-auto-complete-mode t)
-      ))
-  #+END_SRC
-* Avy - navigate by searching for a letter on the screen and jumping to it
-  See https://github.com/abo-abo/avy for more info
-  #+BEGIN_SRC emacs-lisp
-  (use-package avy
-  :ensure t
-  :bind ("M-s" . avy-goto-word-1)) ;; changed from char as per jcs
-  #+END_SRC
-* c++
-#+BEGIN_SRC emacs-lisp
+;; auto-yasnippet:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Avy%20-%20navigate%20by%20searching%20for%20a%20letter%20on%20the%20screen%20and%20jumping%20to%20it][Avy - navigate by searching for a letter on the screen and jumping to it:1]]
+(use-package avy
+:ensure t
+:bind ("M-s" . avy-goto-word-1)) ;; changed from char as per jcs
+;; Avy - navigate by searching for a letter on the screen and jumping to it:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*c++][c++:1]]
 (use-package ggtags
 :ensure t
 :config 
@@ -37,12 +22,9 @@
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
               (ggtags-mode 1))))
 )
+;; c++:1 ends here
 
-#+END_SRC
-
-#+RESULTS:
-* Company
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*Company][Company:1]]
 (use-package company
 :ensure t
 :config
@@ -90,26 +72,18 @@
 ;; company box mode
 ;(use-package company-box
 ;:ensure t
-;  :hook (company-mode . company-box-mode)) 
+;  :hook (company-mode . company-box-mode))
+;; Company:1 ends here
 
-
-#+END_SRC
-
-#+RESULTS:
-* DIRED
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*DIRED][DIRED:1]]
 ; wiki melpa problem
 ;(use-package dired+
 ;  :ensure t
 ;  :config (require 'dired+)
 ;  )
+;; DIRED:1 ends here
 
-
-#+END_SRC
-
-#+RESULTS:
-* Emmet mode
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*Emmet%20mode][Emmet mode:1]]
 (use-package emmet-mode
 :ensure t
 :config
@@ -122,81 +96,65 @@
             (setq emmet-indentation 2)))
 (setq emmet-preview-default nil)
 )
-#+END_SRC
-* Eyebrowse
-#+BEGIN_SRC emacs-lisp :tangle no
-(use-package eyebrowse
-:ensure t
-:config 
-(eyebrowse-mode)
-)
+;; Emmet mode:1 ends here
 
-#+END_SRC
-#+RESULTS:
-  
-* Flycheck
-  #+BEGIN_SRC emacs-lisp
-    (use-package flycheck
-      :ensure t
-      :init
-      (global-flycheck-mode t))
+;; [[file:~/.emacs.d/myinit.org::*Flycheck][Flycheck:1]]
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode t))
+;; Flycheck:1 ends here
 
-  #+END_SRC
+;; [[file:~/.emacs.d/myinit.org::*Git][Git:1]]
+(use-package magit
+  :ensure t
+  :init
+  (progn
+  (bind-key "C-x g" 'magit-status)
+  ))
 
-* Git
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :ensure t
-    :init
-    (progn
-    (bind-key "C-x g" 'magit-status)
-    ))
+  (use-package git-gutter
+  :ensure t
+  :init
+  (global-git-gutter-mode +1))
 
-    (use-package git-gutter
-    :ensure t
-    :init
-    (global-git-gutter-mode +1))
-
-    (global-set-key (kbd "M-g M-g") 'hydra-git-gutter/body)
+  (global-set-key (kbd "M-g M-g") 'hydra-git-gutter/body)
 
 
-    (use-package git-timemachine
-    :ensure t
-    )
-  (defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
-                              :hint nil)
-    "
-  Git gutter:
-    _j_: next hunk        _s_tage hunk     _q_uit
-    _k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
-    ^ ^                   _p_opup hunk
-    _h_: first hunk
-    _l_: last hunk        set start _R_evision
+  (use-package git-timemachine
+  :ensure t
+  )
+(defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
+                            :hint nil)
   "
-    ("j" git-gutter:next-hunk)
-    ("k" git-gutter:previous-hunk)
-    ("h" (progn (goto-char (point-min))
-                (git-gutter:next-hunk 1)))
-    ("l" (progn (goto-char (point-min))
-                (git-gutter:previous-hunk 1)))
-    ("s" git-gutter:stage-hunk)
-    ("r" git-gutter:revert-hunk)
-    ("p" git-gutter:popup-hunk)
-    ("R" git-gutter:set-start-revision)
-    ("q" nil :color blue)
-    ("Q" (progn (git-gutter-mode -1)
-                ;; git-gutter-fringe doesn't seem to
-                ;; clear the markup right away
-                (sit-for 0.1)
-                (git-gutter:clear))
-         :color blue))
+Git gutter:
+  _j_: next hunk        _s_tage hunk     _q_uit
+  _k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
+  ^ ^                   _p_opup hunk
+  _h_: first hunk
+  _l_: last hunk        set start _R_evision
+"
+  ("j" git-gutter:next-hunk)
+  ("k" git-gutter:previous-hunk)
+  ("h" (progn (goto-char (point-min))
+              (git-gutter:next-hunk 1)))
+  ("l" (progn (goto-char (point-min))
+              (git-gutter:previous-hunk 1)))
+  ("s" git-gutter:stage-hunk)
+  ("r" git-gutter:revert-hunk)
+  ("p" git-gutter:popup-hunk)
+  ("R" git-gutter:set-start-revision)
+  ("q" nil :color blue)
+  ("Q" (progn (git-gutter-mode -1)
+              ;; git-gutter-fringe doesn't seem to
+              ;; clear the markup right away
+              (sit-for 0.1)
+              (git-gutter:clear))
+       :color blue))
+;; Git:1 ends here
 
-
-
-#+END_SRC
-* Hydra
-#+BEGIN_SRC emacs-lisp
-  (use-package hydra 
+;; [[file:~/.emacs.d/myinit.org::*Hydra][Hydra:1]]
+(use-package hydra 
     :ensure hydra
     :init 
     (global-set-key
@@ -265,97 +223,88 @@
   ("<mouse-1>" mc/add-cursor-on-click)
   ("<down-mouse-1>" ignore)
   ("<drag-mouse-1>" ignore))
+;; Hydra:1 ends here
 
-#+END_SRC
+;; [[file:~/.emacs.d/myinit.org::*IBUFFER][IBUFFER:1]]
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(setq ibuffer-saved-filter-groups
+      (quote (("default"
+               ("dired" (mode . dired-mode))
+               ("org" (name . "^.*org$"))
+               ("magit" (mode . magit-mode))
+               ("IRC" (or (mode . circe-channel-mode) (mode . circe-server-mode)))
+               ("web" (or (mode . web-mode) (mode . js2-mode)))
+               ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
+               ("mu4e" (or
 
-#+RESULTS:
-* IBUFFER
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x C-b") 'ibuffer)
-  (setq ibuffer-saved-filter-groups
-        (quote (("default"
-                 ("dired" (mode . dired-mode))
-                 ("org" (name . "^.*org$"))
-                 ("magit" (mode . magit-mode))
-                 ("IRC" (or (mode . circe-channel-mode) (mode . circe-server-mode)))
-                 ("web" (or (mode . web-mode) (mode . js2-mode)))
-                 ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
-                 ("mu4e" (or
+                        (mode . mu4e-compose-mode)
+                        (name . "\*mu4e\*")
+                        ))
+               ("programming" (or
+                               (mode . python-mode)
+                               (mode . c++-mode)))
+               ("emacs" (or
+                         (name . "^\\*scratch\\*$")
+                         (name . "^\\*Messages\\*$")))
+               ))))
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (ibuffer-auto-mode 1)
+            (ibuffer-switch-to-saved-filter-groups "default")))
 
-                          (mode . mu4e-compose-mode)
-                          (name . "\*mu4e\*")
-                          ))
-                 ("programming" (or
-                                 (mode . python-mode)
-                                 (mode . c++-mode)))
-                 ("emacs" (or
-                           (name . "^\\*scratch\\*$")
-                           (name . "^\\*Messages\\*$")))
-                 ))))
-  (add-hook 'ibuffer-mode-hook
-            (lambda ()
-              (ibuffer-auto-mode 1)
-              (ibuffer-switch-to-saved-filter-groups "default")))
+;; don't show these
+                                        ;(add-to-list 'ibuffer-never-show-predicates "zowie")
+;; Don't show filter groups if there are no buffers in that group
+(setq ibuffer-show-empty-filter-groups nil)
 
-  ;; don't show these
-                                          ;(add-to-list 'ibuffer-never-show-predicates "zowie")
-  ;; Don't show filter groups if there are no buffers in that group
-  (setq ibuffer-show-empty-filter-groups nil)
+;; Don't ask for confirmation to delete marked buffers
+(setq ibuffer-expert t)
+;; IBUFFER:1 ends here
 
-  ;; Don't ask for confirmation to delete marked buffers
-  (setq ibuffer-expert t)
-#+END_SRC
-* Iedit and narrow / widen dwim
-to use iedit: select region and c-;
+;; [[file:~/.emacs.d/myinit.org::*Iedit%20and%20narrow%20/%20widen%20dwim][Iedit and narrow / widen dwim:1]]
+; mark and edit all copies of the marked region simultaniously. 
+(use-package iedit
+:ensure t)
 
-  #+BEGIN_SRC emacs-lisp
-    ; mark and edit all copies of the marked region simultaniously. 
-    (use-package iedit
-    :ensure t)
+; if you're windened, narrow to the region, if you're narrowed, widen
+; bound to C-x n
+(defun narrow-or-widen-dwim (p)
+"If the buffer is narrowed, it widens. Otherwise, it narrows intelligently.
+Intelligently means: region, org-src-block, org-subtree, or defun,
+whichever applies first.
+Narrowing to org-src-block actually calls `org-edit-src-code'.
 
-    ; if you're windened, narrow to the region, if you're narrowed, widen
-    ; bound to C-x n
-    (defun narrow-or-widen-dwim (p)
-    "If the buffer is narrowed, it widens. Otherwise, it narrows intelligently.
-    Intelligently means: region, org-src-block, org-subtree, or defun,
-    whichever applies first.
-    Narrowing to org-src-block actually calls `org-edit-src-code'.
+With prefix P, don't widen, just narrow even if buffer is already
+narrowed."
+(interactive "P")
+(declare (interactive-only))
+(cond ((and (buffer-narrowed-p) (not p)) (widen))
+((region-active-p)
+(narrow-to-region (region-beginning) (region-end)))
+((derived-mode-p 'org-mode)
+;; `org-edit-src-code' is not a real narrowing command.
+;; Remove this first conditional if you don't want it.
+(cond ((ignore-errors (org-edit-src-code))
+(delete-other-windows))
+((org-at-block-p)
+(org-narrow-to-block))
+(t (org-narrow-to-subtree))))
+(t (narrow-to-defun))))
 
-    With prefix P, don't widen, just narrow even if buffer is already
-    narrowed."
-    (interactive "P")
-    (declare (interactive-only))
-    (cond ((and (buffer-narrowed-p) (not p)) (widen))
-    ((region-active-p)
-    (narrow-to-region (region-beginning) (region-end)))
-    ((derived-mode-p 'org-mode)
-    ;; `org-edit-src-code' is not a real narrowing command.
-    ;; Remove this first conditional if you don't want it.
-    (cond ((ignore-errors (org-edit-src-code))
-    (delete-other-windows))
-    ((org-at-block-p)
-    (org-narrow-to-block))
-    (t (org-narrow-to-subtree))))
-    (t (narrow-to-defun))))
+;; (define-key endless/toggle-map "n" #'narrow-or-widen-dwim)
+;; This line actually replaces Emacs' entire narrowing keymap, that's
+;; how much I like this command. Only copy it if that's what you want.
+(define-key ctl-x-map "n" #'narrow-or-widen-dwim)
+;; Iedit and narrow / widen dwim:1 ends here
 
-    ;; (define-key endless/toggle-map "n" #'narrow-or-widen-dwim)
-    ;; This line actually replaces Emacs' entire narrowing keymap, that's
-    ;; how much I like this command. Only copy it if that's what you want.
-    (define-key ctl-x-map "n" #'narrow-or-widen-dwim)
-  #+END_SRC
-
-
-  #+RESULTS:
-  : narrow-or-widen-dwim
-* Interface Tweaks
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*Interface%20Tweaks][Interface Tweaks:1]]
 (setq inhibit-startup-message t)
 (tool-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-set-key (kbd "<f5>") 'revert-buffer)
-#+END_SRC
-* Javascript
-#+BEGIN_SRC emacs-lisp
+;; Interface Tweaks:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Javascript][Javascript:1]]
 (use-package js2-mode
 :ensure t
 :ensure ac-js2
@@ -418,9 +367,9 @@ to use iedit: select region and c-;
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2))
 (add-hook 'web-mode-hook  'my-web-mode-hook)
-#+END_SRC
-* Keybindings
-#+BEGIN_SRC emacs-lisp
+;; Javascript:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Keybindings][Keybindings:1]]
 (use-package key-chord
 :ensure t
 :config
@@ -440,161 +389,127 @@ to use iedit: select region and c-;
   (next-line 1)
   (yank)
 )
+(global-unset-key (kbd "C-x C-d"))
+(global-set-key (kbd "C-x C-d") 'duplicate-line)
 (key-chord-define-global "yp" 'duplicate-line)
-;; copy line
-(defun copy-line (arg)
-      "Copy lines (as many as prefix argument) in the kill ring"
-      (interactive "p")
-      (kill-ring-save (line-beginning-position)
-                      (line-beginning-position (+ 1 arg)))
-      (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
-(key-chord-define-global "yy" 'copy-line)
-;; copy word
-(defun get-point (symbol &optional arg)
-      "get the point"
-      (funcall symbol arg)
-      (point)
+;; Keybindings:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Misc%20Packages][Misc Packages:1]]
+; Highlights the current cursor line
+(global-hl-line-mode t)
+
+; flashes the cursor's line when you scroll
+(use-package beacon
+:ensure t
+:config
+(beacon-mode 1)
+; (setq beacon-color "#666600")
 )
-(defun copy-thing (begin-of-thing end-of-thing &optional arg)
-  "copy thing between beg & end into kill ring"
-   (save-excursion
-     (let ((beg (get-point begin-of-thing 1))
-           (end (get-point end-of-thing arg)))
-      (copy-region-as-kill beg end)))
+
+; deletes all the whitespace when you hit backspace or delete
+(use-package hungry-delete
+:ensure t
+:config
+(global-hungry-delete-mode))
+
+
+(use-package multiple-cursors
+:ensure t)
+
+; expand the marked region in semantic increments (negative prefix to reduce region)
+(use-package expand-region
+:ensure t
+:config 
+(global-set-key (kbd "C-=") 'er/expand-region))
+
+(setq save-interprogram-paste-before-kill t)
+
+
+(global-auto-revert-mode 1) ;; you might not want this
+(setq auto-revert-verbose nil) ;; or this
+(global-set-key (kbd "<f5>") 'revert-buffer)
+(global-set-key (kbd "<f6>") 'revert-buffer)
+
+;; highlights parentheses
+(use-package highlight-parentheses
+:ensure t
+:config
+(highlight-parentheses-mode 1)
 )
-(defun copy-word (&optional arg)
-      "Copy words at point into kill-ring"
-       (interactive "P")
-       (copy-thing 'backward-word 'forward-word arg)
-       ;;(paste-to-mark arg)
-)
-(key-chord-define-global "ww" 'copy-word)
-(key-chord-define-global "xx" 'save-buffer)
-(key-chord-define-global "qq" 'delete-other-windows)
-(key-chord-define-global "vv" 'save-buffers-kill-terminal)
-#+END_SRC
-* Misc Packages
-  #+BEGIN_SRC emacs-lisp
+;; autocomplete parentheses
+(electric-pair-mode 1) 
+;; mark parentheses
+(show-paren-mode t)
+;; Show column number
+(setq column-number-mode 1) 
+;; Not user GUI dialogs, only minibuffer
+(setq use-dialog-box nil)
+;; Do not use tabs
+(setq-default indent-tabs-mode nil)
+;; Replace TAB with 4 spaces
+(setq-default tab-width 4) 
+;; Set aggressive idennt mode
+(use-package aggressive-indent
+:ensure t
+:config
+(add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+;; Enable cua-mode ctrl-z, ctrl-v ...
+(cua-mode 1)
+;; Disable backup/autosave files
+(setq backup-inhibited t)
+(setq make-backup-files        nil)
+(setq auto-save-default        nil)
+(setq auto-save-list-file-name nil)
+(setq auto-save-default nil)                  
+(setq scroll-preserve-screen-position 10)
+;; Replace "lambda" to λ, function to
+(global-prettify-symbols-mode 1)
+;; Display the name of the current buffer in the title bar
+(setq frame-title-format "%b")
+;; Coding-system settings
+(set-language-environment 'UTF-8)
+(setq buffer-file-coding-system 'utf-8)
+(setq-default coding-system-for-read    'utf-8)
+(setq file-name-coding-system           'utf-8)
+(set-selection-coding-system            'utf-8)
+(set-keyboard-coding-system        'utf-8-unix)
+(set-terminal-coding-system             'utf-8)
+(prefer-coding-system 'utf-8)
+;; Linum plugin
+;;(line-number-mode   t) ;; Show line number in mode-line
+;;(global-linum-mode t) ;; Show line numbers in all buffers
+;; Fringe settings
+(fringe-mode '(8 . 0)) ;; Text delimiter left only
+(setq-default indicate-buffer-boundaries 'left) ;; Indication only on the left
+(setq visible-bell t) ;; show bell when top or bottom
+(scroll-bar-mode -1) ;; Disable scrollbar
+;; Fringe settings
+(fringe-mode '(8 . 0)) ;; Text delimiter left only
+(setq-default indicate-buffer-boundaries 'left) ;; Indication only on the left
+;; Display file size/time in mode-line
+(setq display-time-24hr-format t) ;; 24-hour time format in mode-lin
+(display-time-mode             t) ;; Show hours in mode-line
+(size-indication-mode t) ;; File size in% -s
+;; Paren face
+(set-face-background 'show-paren-match (face-background 'default))
+(set-face-foreground 'show-paren-match "#def")
+(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
+(use-package rainbow-delimiters
+:ensure t
+:config
+(setq rainbow-delimiters-max-face-count 9))
+(set-face-attribute 'default nil :height 105)
 
-  ; Highlights the current cursor line
-  (global-hl-line-mode t)
-  
-  ; flashes the cursor's line when you scroll
-  (use-package beacon
-  :ensure t
-  :config
-  (beacon-mode 1)
-  ; (setq beacon-color "#666600")
-  )
-  
-  ; deletes all the whitespace when you hit backspace or delete
-  (use-package hungry-delete
-  :ensure t
-  :config
-  (global-hungry-delete-mode))
-  
+(when (member "DejaVu Sans Mono" (font-family-list))
+(set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+;; Misc Packages:1 ends here
 
-  (use-package multiple-cursors
-  :ensure t)
-
-  ; expand the marked region in semantic increments (negative prefix to reduce region)
-  (use-package expand-region
-  :ensure t
-  :config 
-  (global-set-key (kbd "C-=") 'er/expand-region))
-
-  (setq save-interprogram-paste-before-kill t)
-
-
-  (global-auto-revert-mode 1) ;; you might not want this
-  (setq auto-revert-verbose nil) ;; or this
-  (global-set-key (kbd "<f5>") 'revert-buffer)
-  (global-set-key (kbd "<f6>") 'revert-buffer)
-  
-  ;; highlights parentheses
-  (use-package highlight-parentheses
-  :ensure t
-  :config
-  (highlight-parentheses-mode 1)
-  )
-  ;; autocomplete parentheses
-  (electric-pair-mode 1) 
-  ;; mark parentheses
-  (show-paren-mode t)
-  ;; Show column number
-  (setq column-number-mode 1) 
-  ;; Not user GUI dialogs, only minibuffer
-  (setq use-dialog-box nil)
-  ;; Do not use tabs
-  (setq-default indent-tabs-mode nil)
-  ;; Replace TAB with 4 spaces
-  (setq-default tab-width 4) 
-  ;; Set aggressive idennt mode
-  (use-package aggressive-indent
-  :ensure t
-  :config
-  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
-  ;; Enable cua-mode ctrl-z, ctrl-v ...
-  (cua-mode 1)
-  ;; Disable backup/autosave files
-  (setq backup-inhibited t)
-  (setq make-backup-files        nil)
-  (setq auto-save-default        nil)
-  (setq auto-save-list-file-name nil)
-  (setq auto-save-default nil)                  
-  (setq scroll-preserve-screen-position 10)
-  ;; Replace "lambda" to λ, function to
-  (global-prettify-symbols-mode 1)
-  ;; Display the name of the current buffer in the title bar
-  (setq frame-title-format "%b")
-  ;; Coding-system settings
-  (set-language-environment 'UTF-8)
-  (setq buffer-file-coding-system 'utf-8)
-  (setq-default coding-system-for-read    'utf-8)
-  (setq file-name-coding-system           'utf-8)
-  (set-selection-coding-system            'utf-8)
-  (set-keyboard-coding-system        'utf-8-unix)
-  (set-terminal-coding-system             'utf-8)
-  (prefer-coding-system 'utf-8)
-  ;; Linum plugin
-  ;;(line-number-mode   t) ;; Show line number in mode-line
-  ;;(global-linum-mode t) ;; Show line numbers in all buffers
-  ;; Fringe settings
-  (fringe-mode '(8 . 0)) ;; Text delimiter left only
-  (setq-default indicate-buffer-boundaries 'left) ;; Indication only on the left
-  (setq visible-bell t) ;; show bell when top or bottom
-  (scroll-bar-mode -1) ;; Disable scrollbar
-  ;; Fringe settings
-  (fringe-mode '(8 . 0)) ;; Text delimiter left only
-  (setq-default indicate-buffer-boundaries 'left) ;; Indication only on the left
-  ;; Display file size/time in mode-line
-  (setq display-time-24hr-format t) ;; 24-hour time format in mode-lin
-  (display-time-mode             t) ;; Show hours in mode-line
-  (size-indication-mode t) ;; File size in% -s
-  ;; Paren face
-  (set-face-background 'show-paren-match (face-background 'default))
-  (set-face-foreground 'show-paren-match "#def")
-  (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
-  (use-package rainbow-delimiters
-  :ensure t
-  :config
-  (setq rainbow-delimiters-max-face-count 9))
-  (set-face-attribute 'default nil :height 105)
-
-  (when (member "DejaVu Sans Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
-
-  #+END_SRC
-* Move Between windows
-Navigate between windows with shit and arrows
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*Move%20Between%20windows][Move Between windows:1]]
 (windmove-default-keybindings)
-#+END_SRC 
-* Org mode
-  Org bullets makes things look pretty
-  #+BEGIN_SRC emacs-lisp
+;; Move Between windows:1 ends here
 
-  (use-package org 
+;; [[file:~/.emacs.d/myinit.org::*Org%20mode][Org mode:1]]
+(use-package org 
   :ensure t
   :pin org)
 
@@ -697,19 +612,14 @@ Navigate between windows with shit and arrows
 (use-package htmlize :ensure t)
 
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
+;; Org mode:1 ends here
 
-  #+END_SRC
-
-  #+RESULTS:
-  : make-capture-frame
-* Origami Folding
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*Origami%20Folding][Origami Folding:1]]
 (use-package origami
 :ensure t)
-#+END_SRC
-#+RESULTS:
-* PDF tools
-#+BEGIN_SRC emacs-lisp
+;; Origami Folding:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*PDF%20tools][PDF tools:1]]
 (use-package pdf-tools
 :ensure t)
 (use-package org-pdfview
@@ -717,61 +627,40 @@ Navigate between windows with shit and arrows
 
 (require 'pdf-tools)
 (require 'org-pdfview)
+;; PDF tools:1 ends here
 
-#+END_SRC
-* Projectile
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*Projectile][Projectile:1]]
 (use-package projectile
       :ensure t
       :bind ("C-c p" . projectile-command-map)
       :config
       (projectile-global-mode)
     (setq projectile-completion-system 'ivy))
-#+END_SRC
-* Python
-  #+BEGIN_SRC emacs-lisp
+;; Projectile:1 ends here
 
-        (setq py-python-command "python3")
-        (setq python-shell-interpreter "python3")
- 
+;; [[file:~/.emacs.d/myinit.org::*Python][Python:1]]
+(setq py-python-command "python3")
+(setq python-shell-interpreter "python3")
 
-            (use-package elpy
-            :ensure t
-            :config 
-            (elpy-enable))
 
-        (use-package virtualenvwrapper
-          :ensure t
-          :config
-          (venv-initialize-interactive-shells)
-          (venv-initialize-eshell))
+    (use-package elpy
+    :ensure t
+    :config 
+    (elpy-enable))
 
-  #+END_SRC
-
-  #+RESULTS:
-  : t
-* Reveal.js
-  #+BEGIN_SRC emacs-lisp  :tangle no
-  (use-package ox-reveal
+(use-package virtualenvwrapper
   :ensure t
   :config
-    (require 'ox-reveal)
-    (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
-    (setq org-reveal-mathjax t)
-)
-    (use-package htmlize
-    :ensure t)
-  #+END_SRC
+  (venv-initialize-interactive-shells)
+  (venv-initialize-eshell))
+;; Python:1 ends here
 
-  #+RESULTS:
-  : t
-* Silversearcher
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*Silversearcher][Silversearcher:1]]
 (use-package ag
 :ensure t)
-#+END_SRC
-* SmartParens
-#+BEGIN_SRC emacs-lisp
+;; Silversearcher:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*SmartParens][SmartParens:1]]
 (use-package smartparens
     :ensure t
     :config
@@ -830,13 +719,10 @@ Navigate between windows with shit and arrows
      ("C-c _"  . wrap-with-underscores)
     ("C-c `"  . wrap-with-back-quotes)
     ))
-#+END_SRC
-* Swiper / Ivy / Counsel
-  Swiper gives us a really efficient incremental search with regular expressions
-  and Ivy / Counsel replace a lot of ido or helms completion functionality
+;; SmartParens:1 ends here
 
-  #+BEGIN_SRC emacs-lisp
-   (use-package counsel
+;; [[file:~/.emacs.d/myinit.org::*Swiper%20/%20Ivy%20/%20Counsel][Swiper / Ivy / Counsel:1]]
+(use-package counsel
 :ensure t
   :bind
   (("M-y" . counsel-yank-pop)
@@ -871,10 +757,9 @@ Navigate between windows with shit and arrows
     (setq ivy-display-style 'fancy)
     (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
     ))
-  #+END_SRC
+;; Swiper / Ivy / Counsel:1 ends here
 
-* Themes and modeline
-#+BEGIN_SRC emacs-lisp 
+;; [[file:~/.emacs.d/myinit.org::*Themes%20and%20modeline][Themes and modeline:1]]
 ;;
 (use-package lab-themes 
 :ensure t
@@ -887,62 +772,60 @@ Navigate between windows with shit and arrows
 :config
 (powerline-default-theme)
 )
-#+END_SRC
-* Treemacs
-#+BEGIN_SRC emacs-lisp
-  (use-package treemacs
-    :ensure t
+;; Themes and modeline:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Treemacs][Treemacs:1]]
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (progn
+
+    (setq treemacs-follow-after-init          t
+          treemacs-width                      35
+          treemacs-indentation                2
+          treemacs-git-integration            t
+          treemacs-collapse-dirs              3
+          treemacs-silent-refresh             nil
+          treemacs-change-root-without-asking nil
+          treemacs-sorting                    'alphabetic-desc
+          treemacs-show-hidden-files          t
+          treemacs-never-persist              nil
+          treemacs-is-never-other-window      nil
+          treemacs-goto-tag-strategy          'refetch-index)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t))
+  :bind
+  (:map global-map
+        ([f8]        . treemacs)
+        ([f9]        . treemacs-projectile)
+        ("M-0"       . treemacs-select-window)
+        ("C-c 1"     . treemacs-delete-other-windows)
+      ))
+  (use-package treemacs-projectile
     :defer t
-    :init
-    (with-eval-after-load 'winum
-      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-    :config
-    (progn
+    :after treemacs projectile
+    (setq treemacs-header-function #'treemacs-projectile-create-header)
+    :ensure t)
+;; Treemacs:1 ends here
 
-      (setq treemacs-follow-after-init          t
-            treemacs-width                      35
-            treemacs-indentation                2
-            treemacs-git-integration            t
-            treemacs-collapse-dirs              3
-            treemacs-silent-refresh             nil
-            treemacs-change-root-without-asking nil
-            treemacs-sorting                    'alphabetic-desc
-            treemacs-show-hidden-files          t
-            treemacs-never-persist              nil
-            treemacs-is-never-other-window      nil
-            treemacs-goto-tag-strategy          'refetch-index)
-
-      (treemacs-follow-mode t)
-      (treemacs-filewatch-mode t))
-    :bind
-    (:map global-map
-          ([f8]        . treemacs)
-          ([f9]        . treemacs-projectile)
-          ("M-0"       . treemacs-select-window)
-          ("C-c 1"     . treemacs-delete-other-windows)
-        ))
-    (use-package treemacs-projectile
-      :defer t
-      :after treemacs projectile
-      (setq treemacs-header-function #'treemacs-projectile-create-header)
-      :ensure t)
-#+END_SRC
-#+RESULTS:
-* Try
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*Try][Try:1]]
 (use-package try
 	:ensure t)
-#+END_SRC
+;; Try:1 ends here
 
-* Undo Tree
-  #+BEGIN_SRC emacs-lisp
-    (use-package undo-tree
-      :ensure t
-      :init
-      (global-undo-tree-mode))
-  #+END_SRC
-* Web Mode
-#+BEGIN_SRC emacs-lisp
+;; [[file:~/.emacs.d/myinit.org::*Undo%20Tree][Undo Tree:1]]
+(use-package undo-tree
+  :ensure t
+  :init
+  (global-undo-tree-mode))
+;; Undo Tree:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Web%20Mode][Web Mode:1]]
 (use-package web-mode
 :ensure t
 :config
@@ -970,29 +853,21 @@ Navigate between windows with shit and arrows
                            (setq web-mode-enable-css-colorization t)
                            (setq web-mode-enable-block-face t)
 )))
+;; Web Mode:1 ends here
 
-#+END_SRC
+;; [[file:~/.emacs.d/myinit.org::*Which%20Key][Which Key:1]]
+(use-package which-key
+      :ensure t 
+      :config
+      (which-key-mode))
+;; Which Key:1 ends here
 
-#+RESULTS:
-: t
-
-* Which Key
-  Brings up some help
-  #+BEGIN_SRC emacs-lisp
-  (use-package which-key
-	:ensure t 
-	:config
-	(which-key-mode))
-  #+END_SRC
-* Yasnippet
-  #+BEGIN_SRC emacs-lisp
-    (use-package yasnippet
+;; [[file:~/.emacs.d/myinit.org::*Yasnippet][Yasnippet:1]]
+(use-package yasnippet
       :ensure t
       :init
         (yas-global-mode 1))
 
 ;    (use-package yasnippet-snippets
 ;      :ensure t)
-  #+END_SRC
-
-  #+RESULTS:
+;; Yasnippet:1 ends here
