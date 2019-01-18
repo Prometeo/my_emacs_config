@@ -729,22 +729,24 @@ Navigate between windows with shit and arrows
     (setq projectile-completion-system 'ivy))
 #+END_SRC
 * Python
-  #+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
 
-        (setq py-python-command "python3")
-        (setq python-shell-interpreter "python3")
- 
+(setq py-python-command "python3")
+(setq python-shell-interpreter "python3")
+(use-package elpy
+  :ensure t
+  :config 
+  (elpy-enable))
+(use-package virtualenvwrapper
+  :ensure t
+  :config
+  (venv-initialize-interactive-shells)
+  (venv-initialize-eshell))
 
-            (use-package elpy
-            :ensure t
-            :config 
-            (elpy-enable))
-
-        (use-package virtualenvwrapper
-          :ensure t
-          :config
-          (venv-initialize-interactive-shells)
-          (venv-initialize-eshell))
+(use-package py-autopep8
+  :ensure t)
+(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+          
 
   #+END_SRC
 
