@@ -105,54 +105,6 @@
   (global-flycheck-mode t))
 ;; Flycheck:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Git][Git:1]]
-(use-package magit
-  :ensure t
-  :init
-  (progn
-  (bind-key "C-x g" 'magit-status)
-  ))
-
-  (use-package git-gutter
-  :ensure t
-  :init
-  (global-git-gutter-mode +1))
-
-  (global-set-key (kbd "M-g M-g") 'hydra-git-gutter/body)
-
-
-  (use-package git-timemachine
-  :ensure t
-  )
-(defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
-                            :hint nil)
-  "
-Git gutter:
-  _j_: next hunk        _s_tage hunk     _q_uit
-  _k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
-  ^ ^                   _p_opup hunk
-  _h_: first hunk
-  _l_: last hunk        set start _R_evision
-"
-  ("j" git-gutter:next-hunk)
-  ("k" git-gutter:previous-hunk)
-  ("h" (progn (goto-char (point-min))
-              (git-gutter:next-hunk 1)))
-  ("l" (progn (goto-char (point-min))
-              (git-gutter:previous-hunk 1)))
-  ("s" git-gutter:stage-hunk)
-  ("r" git-gutter:revert-hunk)
-  ("p" git-gutter:popup-hunk)
-  ("R" git-gutter:set-start-revision)
-  ("q" nil :color blue)
-  ("Q" (progn (git-gutter-mode -1)
-              ;; git-gutter-fringe doesn't seem to
-              ;; clear the markup right away
-              (sit-for 0.1)
-              (git-gutter:clear))
-       :color blue))
-;; Git:1 ends here
-
 ;; [[file:~/.emacs.d/myinit.org::*Hydra][Hydra:1]]
 (use-package hydra 
     :ensure hydra
@@ -224,6 +176,54 @@ Git gutter:
   ("<down-mouse-1>" ignore)
   ("<drag-mouse-1>" ignore))
 ;; Hydra:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Git][Git:1]]
+(use-package magit
+  :ensure t
+  :init
+  (progn
+  (bind-key "C-x g" 'magit-status)
+  ))
+
+  (use-package git-gutter
+  :ensure t
+  :init
+  (global-git-gutter-mode +1))
+
+  (global-set-key (kbd "M-g M-g") 'hydra-git-gutter/body)
+
+
+  (use-package git-timemachine
+  :ensure t
+  )
+(defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
+                            :hint nil)
+  "
+Git gutter:
+  _j_: next hunk        _s_tage hunk     _q_uit
+  _k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
+  ^ ^                   _p_opup hunk
+  _h_: first hunk
+  _l_: last hunk        set start _R_evision
+"
+  ("j" git-gutter:next-hunk)
+  ("k" git-gutter:previous-hunk)
+  ("h" (progn (goto-char (point-min))
+              (git-gutter:next-hunk 1)))
+  ("l" (progn (goto-char (point-min))
+              (git-gutter:previous-hunk 1)))
+  ("s" git-gutter:stage-hunk)
+  ("r" git-gutter:revert-hunk)
+  ("p" git-gutter:popup-hunk)
+  ("R" git-gutter:set-start-revision)
+  ("q" nil :color blue)
+  ("Q" (progn (git-gutter-mode -1)
+              ;; git-gutter-fringe doesn't seem to
+              ;; clear the markup right away
+              (sit-for 0.1)
+              (git-gutter:clear))
+       :color blue))
+;; Git:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*IBUFFER][IBUFFER:1]]
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -389,9 +389,38 @@ narrowed."
   (next-line 1)
   (yank)
 )
-(global-unset-key (kbd "C-x C-d"))
-(global-set-key (kbd "C-x C-d") 'duplicate-line)
 (key-chord-define-global "yp" 'duplicate-line)
+;; copy line
+(defun copy-line (arg)
+      "Copy lines (as many as prefix argument) in the kill ring"
+      (interactive "p")
+      (kill-ring-save (line-beginning-position)
+                      (line-beginning-position (+ 1 arg)))
+      (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
+(key-chord-define-global "yy" 'copy-line)
+;; copy word
+(defun get-point (symbol &optional arg)
+      "get the point"
+      (funcall symbol arg)
+      (point)
+)
+(defun copy-thing (begin-of-thing end-of-thing &optional arg)
+  "copy thing between beg & end into kill ring"
+   (save-excursion
+     (let ((beg (get-point begin-of-thing 1))
+           (end (get-point end-of-thing arg)))
+      (copy-region-as-kill beg end)))
+)
+(defun copy-word (&optional arg)
+      "Copy words at point into kill-ring"
+       (interactive "P")
+       (copy-thing 'backward-word 'forward-word arg)
+       ;;(paste-to-mark arg)
+)
+(key-chord-define-global "ww" 'copy-word)
+(key-chord-define-global "xx" 'save-buffer)
+(key-chord-define-global "qq" 'delete-other-windows)
+(key-chord-define-global "vv" 'save-buffers-kill-terminal)
 ;; Keybindings:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Misc%20Packages][Misc Packages:1]]
@@ -641,18 +670,19 @@ narrowed."
 ;; [[file:~/.emacs.d/myinit.org::*Python][Python:1]]
 (setq py-python-command "python3")
 (setq python-shell-interpreter "python3")
-
-
-    (use-package elpy
-    :ensure t
-    :config 
-    (elpy-enable))
-
+(use-package elpy
+  :ensure t
+  :config 
+  (elpy-enable))
 (use-package virtualenvwrapper
   :ensure t
   :config
   (venv-initialize-interactive-shells)
   (venv-initialize-eshell))
+
+(use-package py-autopep8
+  :ensure t)
+(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 ;; Python:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Silversearcher][Silversearcher:1]]
