@@ -1,17 +1,24 @@
-;; [[file:~/.emacs.d/myinit.org::*repos][repos:1]]
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-;; repos:1 ends here
+;; [[file:~/.emacs.d/myinit.org::*Set%20full%20name][Set full name:1]]
+(setq user-full-name "Prometeo")
+;; Set full name:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*auto-yasnippet][auto-yasnippet:1]]
+;; [[file:~/.emacs.d/myinit.org::*Repos][Repos:1]]
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+;; Repos:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Auto-yasnippet][Auto-yasnippet:1]]
 (use-package auto-yasnippet
 :ensure t)
-;; auto-yasnippet:1 ends here
+;; Auto-yasnippet:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Avy%20-%20navigate%20by%20searching%20for%20a%20letter%20on%20the%20screen%20and%20jumping%20to%20it][Avy - navigate by searching for a letter on the screen and jumping to it:1]]
+;; [[file:~/.emacs.d/myinit.org::*Avy][Avy:1]]
+;; Navigate by searching for a letter on the screen and jumping to it
+;; See https://github.com/abo-abo/avy for more info
+
 (use-package avy
 :ensure t
 :bind ("M-s" . avy-goto-word-1)) ;; changed from char as per jcs
-;; Avy - navigate by searching for a letter on the screen and jumping to it:1 ends here
+;; Avy:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*c++][c++:1]]
 (use-package ggtags
@@ -423,6 +430,39 @@ narrowed."
 (key-chord-define-global "vv" 'save-buffers-kill-terminal)
 ;; Keybindings:1 ends here
 
+;; [[file:~/.emacs.d/myinit.org::*LSP-MODE][LSP-MODE:1]]
+;; The Language Server Protocol to provide more conventional IDE-like features to editors without needing to write a custom, complex backend.
+;;   Instead, one only needs to write a client for the desired language's language server.
+;;   You can also use =company-mode= with LSP.
+
+(use-package lsp-mode
+  :ensure t
+  :commands lsp
+  :hook (prog-mode . lsp))
+
+;; TODO: make the window disappear/behave normally && hide line numbers
+(defun my/hide-frame-line-numbers (frame _window)
+  "Hides line nunmbers from a specific frame in a winow."
+  (select-frame frame)
+  (display-line-numbers-mode -1))
+
+(use-package lsp-ui
+  :commands lsp-ui-mode
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (setq lsp-ui-sideline-ignore-duplicate t)
+  ;; (add-hook 'lsp-ui-doc-frame-hook #'my/hide-frame-line-numbers)
+  )
+
+(use-package company-lsp
+  :commands company-lsp
+  :config
+  (push 'company-lsp company-backends)
+  (setq company-lsp-async t
+        company-lsp-cache-candidates 'auto
+        company-lsp-enable-recompletion t))
+;; LSP-MODE:1 ends here
+
 ;; [[file:~/.emacs.d/myinit.org::*Misc%20Packages][Misc Packages:1]]
 ; Highlights the current cursor line
 (global-hl-line-mode t)
@@ -671,17 +711,17 @@ narrowed."
 (setq py-python-command "python3")
 (setq python-shell-interpreter "python3")
 (use-package elpy
-  :ensure t
-  :config 
-  (elpy-enable))
+ :ensure t
+ :config 
+ (elpy-enable))
 (use-package virtualenvwrapper
-  :ensure t
-  :config
-  (venv-initialize-interactive-shells)
-  (venv-initialize-eshell))
+ :ensure t
+ :config
+ (venv-initialize-interactive-shells)
+ (venv-initialize-eshell))
 
 (use-package py-autopep8
-  :ensure t)
+ :ensure t)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 ;; Python:1 ends here
 

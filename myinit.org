@@ -1,11 +1,15 @@
 #+STARTUP: overview 
 #+PROPERTY: header-args :comments yes :results silent
-* repos
+* Set full name
+#+BEGIN_SRC emacs-lisp
+(setq user-full-name "Prometeo")
+#+END_SRC
+* Repos
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 
 #+END_SRC
-* auto-yasnippet
+* Auto-yasnippet
 #+BEGIN_SRC emacs-lisp
 (use-package auto-yasnippet
 :ensure t)
@@ -20,9 +24,11 @@
        (global-auto-complete-mode t)
       ))
   #+END_SRC
-* Avy - navigate by searching for a letter on the screen and jumping to it
-  See https://github.com/abo-abo/avy for more info
+* Avy
   #+BEGIN_SRC emacs-lisp
+  ;; Navigate by searching for a letter on the screen and jumping to it
+  ;; See https://github.com/abo-abo/avy for more info
+
   (use-package avy
   :ensure t
   :bind ("M-s" . avy-goto-word-1)) ;; changed from char as per jcs
@@ -474,6 +480,39 @@ to use iedit: select region and c-;
 (key-chord-define-global "qq" 'delete-other-windows)
 (key-chord-define-global "vv" 'save-buffers-kill-terminal)
 #+END_SRC
+* LSP-MODE
+#+BEGIN_SRC emacs-lisp
+;; The Language Server Protocol to provide more conventional IDE-like features to editors without needing to write a custom, complex backend.
+;;   Instead, one only needs to write a client for the desired language's language server.
+;;   You can also use =company-mode= with LSP.
+
+(use-package lsp-mode
+  :ensure t
+  :commands lsp
+  :hook (prog-mode . lsp))
+
+;; TODO: make the window disappear/behave normally && hide line numbers
+(defun my/hide-frame-line-numbers (frame _window)
+  "Hides line nunmbers from a specific frame in a winow."
+  (select-frame frame)
+  (display-line-numbers-mode -1))
+
+(use-package lsp-ui
+  :commands lsp-ui-mode
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (setq lsp-ui-sideline-ignore-duplicate t)
+  ;; (add-hook 'lsp-ui-doc-frame-hook #'my/hide-frame-line-numbers)
+  )
+
+(use-package company-lsp
+  :commands company-lsp
+  :config
+  (push 'company-lsp company-backends)
+  (setq company-lsp-async t
+        company-lsp-cache-candidates 'auto
+        company-lsp-enable-recompletion t))
+#+END_SRC
 * Misc Packages
   #+BEGIN_SRC emacs-lisp
 
@@ -731,22 +770,21 @@ Navigate between windows with shit and arrows
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
+  (setq py-python-command "python3")
+  (setq python-shell-interpreter "python3")
+  (use-package elpy
+   :ensure t
+   :config 
+   (elpy-enable))
+  (use-package virtualenvwrapper
+   :ensure t
+   :config
+   (venv-initialize-interactive-shells)
+   (venv-initialize-eshell))
 
-(setq py-python-command "python3")
-(setq python-shell-interpreter "python3")
-(use-package elpy
-  :ensure t
-  :config 
-  (elpy-enable))
-(use-package virtualenvwrapper
-  :ensure t
-  :config
-  (venv-initialize-interactive-shells)
-  (venv-initialize-eshell))
-
-(use-package py-autopep8
-  :ensure t)
-(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+  (use-package py-autopep8
+   :ensure t)
+  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
           
 
   #+END_SRC
