@@ -1,13 +1,8 @@
 #+STARTUP: overview 
 #+PROPERTY: header-args :comments yes :results silent
-* Set full name
-#+BEGIN_SRC emacs-lisp
-(setq user-full-name "Prometeo")
-#+END_SRC
 * Repos
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-
 #+END_SRC
 * Auto-yasnippet
 #+BEGIN_SRC emacs-lisp
@@ -25,14 +20,13 @@
       ))
   #+END_SRC
 * Avy
-  #+BEGIN_SRC emacs-lisp
-  ;; Navigate by searching for a letter on the screen and jumping to it
-  ;; See https://github.com/abo-abo/avy for more info
-
-  (use-package avy
+Navigate by searching for a letter on the screen and jumping to it
+See https://github.com/abo-abo/avy for more info
+#+BEGIN_SRC emacs-lisp
+(use-package avy
   :ensure t
   :bind ("M-s" . avy-goto-word-1)) ;; changed from char as per jcs
-  #+END_SRC
+#+END_SRC
 * c++
 #+BEGIN_SRC emacs-lisp
 (use-package ggtags
@@ -480,39 +474,6 @@ to use iedit: select region and c-;
 (key-chord-define-global "qq" 'delete-other-windows)
 (key-chord-define-global "vv" 'save-buffers-kill-terminal)
 #+END_SRC
-* LSP-MODE
-#+BEGIN_SRC emacs-lisp
-;; The Language Server Protocol to provide more conventional IDE-like features to editors without needing to write a custom, complex backend.
-;;   Instead, one only needs to write a client for the desired language's language server.
-;;   You can also use =company-mode= with LSP.
-
-(use-package lsp-mode
-  :ensure t
-  :commands lsp
-  :hook (prog-mode . lsp))
-
-;; TODO: make the window disappear/behave normally && hide line numbers
-(defun my/hide-frame-line-numbers (frame _window)
-  "Hides line nunmbers from a specific frame in a winow."
-  (select-frame frame)
-  (display-line-numbers-mode -1))
-
-(use-package lsp-ui
-  :commands lsp-ui-mode
-  :hook (lsp-mode . lsp-ui-mode)
-  :config
-  (setq lsp-ui-sideline-ignore-duplicate t)
-  ;; (add-hook 'lsp-ui-doc-frame-hook #'my/hide-frame-line-numbers)
-  )
-
-(use-package company-lsp
-  :commands company-lsp
-  :config
-  (push 'company-lsp company-backends)
-  (setq company-lsp-async t
-        company-lsp-cache-candidates 'auto
-        company-lsp-enable-recompletion t))
-#+END_SRC
 * Misc Packages
   #+BEGIN_SRC emacs-lisp
 
@@ -766,7 +727,24 @@ Navigate between windows with shit and arrows
       :bind ("C-c p" . projectile-command-map)
       :config
       (projectile-global-mode)
-    (setq projectile-completion-system 'ivy))
+      (setq projectile-completion-system 'ivy)
+      (setq projectile-globally-ignored-directories
+      (cl-union projectile-globally-ignored-directories
+      '(".git"
+      "node_modules"
+      "venv")))
+      (setq projectile-globally-ignored-files
+          (cl-union projectile-globally-ignored-files
+              '(".DS_Store"
+              "*.gz"
+              "*.pyc"
+              "*.png"
+              "*.jpg"
+              "*.jar"
+              "*.svg"
+              "*.tgz"
+              "*.zip")))
+)
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
@@ -791,6 +769,9 @@ Navigate between windows with shit and arrows
 
   #+RESULTS:
   : t
+* Parentheses
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
 * Reveal.js
   #+BEGIN_SRC emacs-lisp  :tangle no
   (use-package ox-reveal
@@ -806,6 +787,30 @@ Navigate between windows with shit and arrows
 
   #+RESULTS:
   : t
+* Rust
+#+BEGIN_SRC emacs-lisp
+(use-package rust-mode
+  :ensure t)
+(use-package flymake-rust
+  :ensure t)
+(use-package flycheck-rust
+  :ensure t)
+(use-package racer
+  :ensure t)
+(use-package cargo
+  :ensure t)
+(add-to-list 'load-path "/path/to/rust-mode/")
+(autoload 'rust-mode "rust-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  (add-hook 'rust-mode-hook 'cargo-minor-mode)
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode))
+(setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+
+#+END_SRC
 * Silversearcher
 #+BEGIN_SRC emacs-lisp
 (use-package ag
@@ -824,11 +829,11 @@ Navigate between windows with shit and arrows
     (show-smartparens-global-mode t)
     :bind
     ( ("C-<down>" . sp-down-sexp)
-     ("C-<up>"   . sp-up-sexp)
-     ("M-<down>" . sp-backward-down-sexp)
-     ("M-<up>"   . sp-backward-up-sexp)
+    ("C-<up>"   . sp-up-sexp)
+    ("M-<down>" . sp-backward-down-sexp)
+    ("M-<up>"   . sp-backward-up-sexp)
     ("C-M-a" . sp-beginning-of-sexp)
-     ("C-M-e" . sp-end-of-sexp)
+    ("C-M-e" . sp-end-of-sexp)
 
 
 
@@ -877,8 +882,8 @@ Navigate between windows with shit and arrows
   and Ivy / Counsel replace a lot of ido or helms completion functionality
 
   #+BEGIN_SRC emacs-lisp
-   (use-package counsel
-:ensure t
+  (use-package counsel
+  :ensure t
   :bind
   (("M-y" . counsel-yank-pop)
    :map ivy-minibuffer-map
@@ -928,6 +933,11 @@ Navigate between windows with shit and arrows
 :config
 (powerline-default-theme)
 )
+#+END_SRC
+* TOML
+#+BEGIN_SRC emacs-lisp
+(use-package toml-mode
+  :ensure t)
 #+END_SRC
 * Treemacs
 #+BEGIN_SRC emacs-lisp
@@ -1025,6 +1035,13 @@ Navigate between windows with shit and arrows
 	:config
 	(which-key-mode))
   #+END_SRC
+* YAML
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode
+  :ensure t
+  :mode ("\\.yml\\'"
+         "\\.yaml\\'"))
+#+END_SRC
 * Yasnippet
   #+BEGIN_SRC emacs-lisp
     (use-package yasnippet

@@ -1,7 +1,3 @@
-;; [[file:~/.emacs.d/myinit.org::*Set%20full%20name][Set full name:1]]
-(setq user-full-name "Prometeo")
-;; Set full name:1 ends here
-
 ;; [[file:~/.emacs.d/myinit.org::*Repos][Repos:1]]
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 ;; Repos:1 ends here
@@ -12,12 +8,9 @@
 ;; Auto-yasnippet:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Avy][Avy:1]]
-;; Navigate by searching for a letter on the screen and jumping to it
-;; See https://github.com/abo-abo/avy for more info
-
 (use-package avy
-:ensure t
-:bind ("M-s" . avy-goto-word-1)) ;; changed from char as per jcs
+  :ensure t
+  :bind ("M-s" . avy-goto-word-1)) ;; changed from char as per jcs
 ;; Avy:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*c++][c++:1]]
@@ -430,39 +423,6 @@ narrowed."
 (key-chord-define-global "vv" 'save-buffers-kill-terminal)
 ;; Keybindings:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*LSP-MODE][LSP-MODE:1]]
-;; The Language Server Protocol to provide more conventional IDE-like features to editors without needing to write a custom, complex backend.
-;;   Instead, one only needs to write a client for the desired language's language server.
-;;   You can also use =company-mode= with LSP.
-
-(use-package lsp-mode
-  :ensure t
-  :commands lsp
-  :hook (prog-mode . lsp))
-
-;; TODO: make the window disappear/behave normally && hide line numbers
-(defun my/hide-frame-line-numbers (frame _window)
-  "Hides line nunmbers from a specific frame in a winow."
-  (select-frame frame)
-  (display-line-numbers-mode -1))
-
-(use-package lsp-ui
-  :commands lsp-ui-mode
-  :hook (lsp-mode . lsp-ui-mode)
-  :config
-  (setq lsp-ui-sideline-ignore-duplicate t)
-  ;; (add-hook 'lsp-ui-doc-frame-hook #'my/hide-frame-line-numbers)
-  )
-
-(use-package company-lsp
-  :commands company-lsp
-  :config
-  (push 'company-lsp company-backends)
-  (setq company-lsp-async t
-        company-lsp-cache-candidates 'auto
-        company-lsp-enable-recompletion t))
-;; LSP-MODE:1 ends here
-
 ;; [[file:~/.emacs.d/myinit.org::*Misc%20Packages][Misc Packages:1]]
 ; Highlights the current cursor line
 (global-hl-line-mode t)
@@ -704,7 +664,24 @@ narrowed."
       :bind ("C-c p" . projectile-command-map)
       :config
       (projectile-global-mode)
-    (setq projectile-completion-system 'ivy))
+      (setq projectile-completion-system 'ivy)
+      (setq projectile-globally-ignored-directories
+      (cl-union projectile-globally-ignored-directories
+      '(".git"
+      "node_modules"
+      "venv")))
+      (setq projectile-globally-ignored-files
+          (cl-union projectile-globally-ignored-files
+              '(".DS_Store"
+              "*.gz"
+              "*.pyc"
+              "*.png"
+              "*.jpg"
+              "*.jar"
+              "*.svg"
+              "*.tgz"
+              "*.zip")))
+)
 ;; Projectile:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Python][Python:1]]
@@ -725,6 +702,33 @@ narrowed."
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 ;; Python:1 ends here
 
+;; [[file:~/.emacs.d/myinit.org::*Parentheses][Parentheses:1]]
+
+;; Parentheses:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Rust][Rust:1]]
+(use-package rust-mode
+  :ensure t)
+(use-package flymake-rust
+  :ensure t)
+(use-package flycheck-rust
+  :ensure t)
+(use-package racer
+  :ensure t)
+(use-package cargo
+  :ensure t)
+(add-to-list 'load-path "/path/to/rust-mode/")
+(autoload 'rust-mode "rust-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  (add-hook 'rust-mode-hook 'cargo-minor-mode)
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode))
+(setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+;; Rust:1 ends here
+
 ;; [[file:~/.emacs.d/myinit.org::*Silversearcher][Silversearcher:1]]
 (use-package ag
 :ensure t)
@@ -742,11 +746,11 @@ narrowed."
     (show-smartparens-global-mode t)
     :bind
     ( ("C-<down>" . sp-down-sexp)
-     ("C-<up>"   . sp-up-sexp)
-     ("M-<down>" . sp-backward-down-sexp)
-     ("M-<up>"   . sp-backward-up-sexp)
+    ("C-<up>"   . sp-up-sexp)
+    ("M-<down>" . sp-backward-down-sexp)
+    ("M-<up>"   . sp-backward-up-sexp)
     ("C-M-a" . sp-beginning-of-sexp)
-     ("C-M-e" . sp-end-of-sexp)
+    ("C-M-e" . sp-end-of-sexp)
 
 
 
@@ -794,39 +798,39 @@ narrowed."
 ;; [[file:~/.emacs.d/myinit.org::*Swiper%20/%20Ivy%20/%20Counsel][Swiper / Ivy / Counsel:1]]
 (use-package counsel
 :ensure t
-  :bind
-  (("M-y" . counsel-yank-pop)
-   :map ivy-minibuffer-map
-   ("M-y" . ivy-next-line)))
+:bind
+(("M-y" . counsel-yank-pop)
+ :map ivy-minibuffer-map
+ ("M-y" . ivy-next-line)))
 
 
 
 
-  (use-package ivy
-  :ensure t
-  :diminish (ivy-mode)
-  :bind (("C-x b" . ivy-switch-buffer))
-  :config
+(use-package ivy
+:ensure t
+:diminish (ivy-mode)
+:bind (("C-x b" . ivy-switch-buffer))
+:config
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "%d/%d ")
+(setq ivy-display-style 'fancy))
+
+
+(use-package swiper
+:ensure t
+:bind (("C-s" . swiper)
+       ("C-r" . swiper)
+       ("C-c C-r" . ivy-resume)
+       ("M-x" . counsel-M-x)
+       ("C-x C-f" . counsel-find-file))
+:config
+(progn
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "%d/%d ")
-  (setq ivy-display-style 'fancy))
-
-
-  (use-package swiper
-  :ensure t
-  :bind (("C-s" . swiper)
-	 ("C-r" . swiper)
-	 ("C-c C-r" . ivy-resume)
-	 ("M-x" . counsel-M-x)
-	 ("C-x C-f" . counsel-find-file))
-  :config
-  (progn
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-display-style 'fancy)
-    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
-    ))
+  (setq ivy-display-style 'fancy)
+  (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+  ))
 ;; Swiper / Ivy / Counsel:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Themes%20and%20modeline][Themes and modeline:1]]
@@ -843,6 +847,11 @@ narrowed."
 (powerline-default-theme)
 )
 ;; Themes and modeline:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*TOML][TOML:1]]
+(use-package toml-mode
+  :ensure t)
+;; TOML:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Treemacs][Treemacs:1]]
 (use-package treemacs
@@ -931,6 +940,13 @@ narrowed."
       :config
       (which-key-mode))
 ;; Which Key:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*YAML][YAML:1]]
+(use-package yaml-mode
+  :ensure t
+  :mode ("\\.yml\\'"
+         "\\.yaml\\'"))
+;; YAML:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Yasnippet][Yasnippet:1]]
 (use-package yasnippet
