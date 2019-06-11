@@ -2,6 +2,11 @@
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 ;; Repos:1 ends here
 
+;; [[file:~/.emacs.d/myinit.org::*Ansible][Ansible:1]]
+(use-package ansible
+:ensure t)
+;; Ansible:1 ends here
+
 ;; [[file:~/.emacs.d/myinit.org::*Auto-yasnippet][Auto-yasnippet:1]]
 (use-package auto-yasnippet
 :ensure t)
@@ -82,6 +87,12 @@
 ;  :config (require 'dired+)
 ;  )
 ;; DIRED:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Docker][Docker:1]]
+(use-package dockerfile-mode
+:ensure t)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+;; Docker:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Emmet%20mode][Emmet mode:1]]
 (use-package emmet-mode
