@@ -954,10 +954,10 @@ narrowed."
 
 ;; [[file:~/.emacs.d/myinit.org::*Yasnippet][Yasnippet:1]]
 (use-package yasnippet
-      :ensure t
-      :init
-        (yas-global-mode 1))
-
-;    (use-package yasnippet-snippets
-;      :ensure t)
+  :ensure t
+  :init
+    (yas-global-mode 1))
+(setq yas-snippet-dirs
+  '("~/.emacs.d/snippets"))
+(yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
 ;; Yasnippet:1 ends here

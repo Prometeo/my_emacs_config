@@ -1051,9 +1051,8 @@ Navigate between windows with shit and arrows
       :ensure t
       :init
         (yas-global-mode 1))
-
-;    (use-package yasnippet-snippets
-;      :ensure t)
+    (setq yas-snippet-dirs
+      '("~/.emacs.d/snippets"))
+    (yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
+    
   #+END_SRC
-
-  #+RESULTS:
