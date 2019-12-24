@@ -908,13 +908,6 @@ narrowed."
 	:ensure t)
 ;; Try:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Undo%20Tree][Undo Tree:1]]
-(use-package undo-tree
-  :ensure t
-  :init
-  (global-undo-tree-mode))
-;; Undo Tree:1 ends here
-
 ;; [[file:~/.emacs.d/myinit.org::*Web%20Mode][Web Mode:1]]
 (use-package web-mode
 :ensure t
