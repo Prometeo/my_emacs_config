@@ -35,7 +35,10 @@
 :config
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 3)
-
+(setq company-show-numbers t)
+(setq company-tooltip-limit 10)
+(setq company-tooltip-align-annotations t)
+(setq company-tooltip-flip-when-above t)
 (global-company-mode t)
 )
 
@@ -59,25 +62,20 @@
 :config
 (add-hook 'irony-mode-hook #'irony-eldoc))
 
-(defun my/python-mode-hook ()
-  (add-to-list 'company-backends 'company-jedi))
+;; (defun my/python-mode-hook ()
+;;   (add-to-list 'company-backends 'company-jedi))
 
-(add-hook 'python-mode-hook 'my/python-mode-hook)
-(use-package company-jedi
-    :ensure t
-    :config
-    (add-hook 'python-mode-hook 'jedi:setup)
-       )
+;; (add-hook 'python-mode-hook 'my/python-mode-hook)
+;; (use-package company-jedi
+;;     :ensure t
+;;     :config
+;;     (add-hook 'python-mode-hook 'jedi:setup)
+;;        )
 
-(defun my/python-mode-hook ()
-  (add-to-list 'company-backends 'company-jedi))
+;; (defun my/python-mode-hook ()
+;;   (add-to-list 'company-backends 'company-jedi))
 
-(add-hook 'python-mode-hook 'my/python-mode-hook)
-
-;; company box mode
-;(use-package company-box
-;:ensure t
-;  :hook (company-mode . company-box-mode))
+;; (add-hook 'python-mode-hook 'my/python-mode-hook)
 ;; Company:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*DIRED][DIRED:1]]
@@ -669,6 +667,14 @@ narrowed."
 (require 'org-pdfview)
 ;; PDF tools:1 ends here
 
+;; [[file:~/.emacs.d/myinit.org::*Programming][Programming:1]]
+(use-package hl-todo
+    :ensure t
+)
+(global-hl-todo-mode 1)
+(which-function-mode 1)
+;; Programming:1 ends here
+
 ;; [[file:~/.emacs.d/myinit.org::*Projectile][Projectile:1]]
 (use-package projectile
       :ensure t
@@ -696,21 +702,12 @@ narrowed."
 ;; Projectile:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Python][Python:1]]
-(setq py-python-command "python3")
-(setq python-shell-interpreter "python3")
-(use-package elpy
- :ensure t
- :config 
- (elpy-enable))
-(use-package virtualenvwrapper
- :ensure t
- :config
- (venv-initialize-interactive-shells)
- (venv-initialize-eshell))
-
-(use-package py-autopep8
- :ensure t)
-(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+(use-package anaconda-mode
+    :ensure t)
+(use-package company-anaconda
+    :ensure t)
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 ;; Python:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Parentheses][Parentheses:1]]
