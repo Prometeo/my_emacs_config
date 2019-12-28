@@ -63,38 +63,19 @@ See https://github.com/abo-abo/avy for more info
   (use-package company-irony
   :ensure t
   :config 
-  (add-to-list 'company-backends 'company-irony)
-
-  )
+  (add-to-list 'company-backends 'company-irony))
 
   (use-package irony
   :ensure t
   :config
   (add-hook 'c++-mode-hook 'irony-mode)
   (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  )
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
   (use-package irony-eldoc
   :ensure t
   :config
   (add-hook 'irony-mode-hook #'irony-eldoc))
-
-  ;; (defun my/python-mode-hook ()
-  ;;   (add-to-list 'company-backends 'company-jedi))
-
-  ;; (add-hook 'python-mode-hook 'my/python-mode-hook)
-  ;; (use-package company-jedi
-  ;;     :ensure t
-  ;;     :config
-  ;;     (add-hook 'python-mode-hook 'jedi:setup)
-  ;;        )
-
-  ;; (defun my/python-mode-hook ()
-  ;;   (add-to-list 'company-backends 'company-jedi))
-
-  ;; (add-hook 'python-mode-hook 'my/python-mode-hook)
-
 
 #+END_SRC
 
@@ -777,9 +758,6 @@ Navigate between windows with shit and arrows
 
   #+RESULTS:
   : t
-* Parentheses
-#+BEGIN_SRC emacs-lisp
-#+END_SRC
 * Reveal.js
   #+BEGIN_SRC emacs-lisp  :tangle no
   (use-package ox-reveal
