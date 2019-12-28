@@ -516,6 +516,11 @@ narrowed."
 ;; Linum plugin
 ;;(line-number-mode   t) ;; Show line number in mode-line
 ;;(global-linum-mode t) ;; Show line numbers in all buffers
+;; font-lock annotations like TODO in source code
+(use-package hl-todo
+    :ensure t)
+(global-hl-todo-mode 1)
+(which-function-mode 1)
 ;; Fringe settings
 (fringe-mode '(8 . 0)) ;; Text delimiter left only
 (setq-default indicate-buffer-boundaries 'left) ;; Indication only on the left
@@ -667,14 +672,6 @@ narrowed."
 (require 'org-pdfview)
 ;; PDF tools:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Programming][Programming:1]]
-(use-package hl-todo
-    :ensure t
-)
-(global-hl-todo-mode 1)
-(which-function-mode 1)
-;; Programming:1 ends here
-
 ;; [[file:~/.emacs.d/myinit.org::*Projectile][Projectile:1]]
 (use-package projectile
       :ensure t
@@ -708,6 +705,9 @@ narrowed."
     :ensure t)
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+
+(defun python--encoding-comment-required-p ()
+  (re-search-forward "[^\0-\177]" nil t))
 ;; Python:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Parentheses][Parentheses:1]]
