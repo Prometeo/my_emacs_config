@@ -9,6 +9,27 @@
 (use-package ansible
 :ensure t)
 #+END_SRC
+* Ace-window
+#+BEGIN_SRC emacs-lisp
+(use-package ace-window
+    :ensure t)
+(global-set-key (kbd "M-o") 'ace-window)
+(setq aw-background nil)
+(defvar aw-dispatch-alist
+  '((?x aw-delete-window "Delete Window")
+	(?m aw-swap-window "Swap Windows")
+	(?M aw-move-window "Move Window")
+	(?c aw-copy-window "Copy Window")
+	(?j aw-switch-buffer-in-window "Select Buffer")
+	(?n aw-flip-window)
+	(?u aw-switch-buffer-other-window "Switch Buffer Other Window")
+	(?c aw-split-window-fair "Split Fair Window")
+	(?v aw-split-window-vert "Split Vert Window")
+	(?b aw-split-window-horz "Split Horz Window")
+	(?o delete-other-windows "Delete Other Windows")
+	(?? aw-show-dispatch-help))
+  "List of actions for `aw-dispatch-default'.")
+#+END_SRC
 * Auto-yasnippet
 #+BEGIN_SRC emacs-lisp
 (use-package auto-yasnippet
@@ -500,7 +521,6 @@ to use iedit: select region and c-;
 
   (global-auto-revert-mode 1) ;; you might not want this
   (setq auto-revert-verbose nil) ;; or this
-  (global-set-key (kbd "<f5>") 'revert-buffer)
   (global-set-key (kbd "<f6>") 'revert-buffer)
   
   ;; highlights parentheses
@@ -582,11 +602,6 @@ to use iedit: select region and c-;
   (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
 
   #+END_SRC
-* Move Between windows
-Navigate between windows with shit and arrows
-#+BEGIN_SRC emacs-lisp
-(windmove-default-keybindings)
-#+END_SRC 
 * Org mode
   Org bullets makes things look pretty
   #+BEGIN_SRC emacs-lisp

@@ -7,6 +7,27 @@
 :ensure t)
 ;; Ansible:1 ends here
 
+;; [[file:~/.emacs.d/myinit.org::*Ace-window][Ace-window:1]]
+(use-package ace-window
+    :ensure t)
+(global-set-key (kbd "M-o") 'ace-window)
+(setq aw-background nil)
+(defvar aw-dispatch-alist
+  '((?x aw-delete-window "Delete Window")
+	(?m aw-swap-window "Swap Windows")
+	(?M aw-move-window "Move Window")
+	(?c aw-copy-window "Copy Window")
+	(?j aw-switch-buffer-in-window "Select Buffer")
+	(?n aw-flip-window)
+	(?u aw-switch-buffer-other-window "Switch Buffer Other Window")
+	(?c aw-split-window-fair "Split Fair Window")
+	(?v aw-split-window-vert "Split Vert Window")
+	(?b aw-split-window-horz "Split Horz Window")
+	(?o delete-other-windows "Delete Other Windows")
+	(?? aw-show-dispatch-help))
+  "List of actions for `aw-dispatch-default'.")
+;; Ace-window:1 ends here
+
 ;; [[file:~/.emacs.d/myinit.org::*Auto-yasnippet][Auto-yasnippet:1]]
 (use-package auto-yasnippet
 :ensure t)
@@ -45,37 +66,19 @@
 (use-package company-irony
 :ensure t
 :config 
-(add-to-list 'company-backends 'company-irony)
-
-)
+(add-to-list 'company-backends 'company-irony))
 
 (use-package irony
 :ensure t
 :config
 (add-hook 'c++-mode-hook 'irony-mode)
 (add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
 (use-package irony-eldoc
 :ensure t
 :config
 (add-hook 'irony-mode-hook #'irony-eldoc))
-
-;; (defun my/python-mode-hook ()
-;;   (add-to-list 'company-backends 'company-jedi))
-
-;; (add-hook 'python-mode-hook 'my/python-mode-hook)
-;; (use-package company-jedi
-;;     :ensure t
-;;     :config
-;;     (add-hook 'python-mode-hook 'jedi:setup)
-;;        )
-
-;; (defun my/python-mode-hook ()
-;;   (add-to-list 'company-backends 'company-jedi))
-
-;; (add-hook 'python-mode-hook 'my/python-mode-hook)
 ;; Company:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*DIRED][DIRED:1]]
@@ -709,10 +712,6 @@ narrowed."
 (defun python--encoding-comment-required-p ()
   (re-search-forward "[^\0-\177]" nil t))
 ;; Python:1 ends here
-
-;; [[file:~/.emacs.d/myinit.org::*Parentheses][Parentheses:1]]
-
-;; Parentheses:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Rust][Rust:1]]
 (use-package rust-mode
