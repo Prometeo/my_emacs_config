@@ -300,7 +300,8 @@ See https://github.com/abo-abo/avy for more info
                           ))
                  ("programming" (or
                                  (mode . python-mode)
-                                 (mode . c++-mode)))
+                                 (mode . c++-mode)
+                                 (mode . rust-mode)))
                  ("emacs" (or
                            (name . "^\\*scratch\\*$")
                            (name . "^\\*Messages\\*$")))

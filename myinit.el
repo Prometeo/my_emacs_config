@@ -254,7 +254,8 @@ Git gutter:
                         ))
                ("programming" (or
                                (mode . python-mode)
-                               (mode . c++-mode)))
+                               (mode . c++-mode)
+                               (mode . rust-mode)))
                ("emacs" (or
                          (name . "^\\*scratch\\*$")
                          (name . "^\\*Messages\\*$")))
@@ -468,7 +469,6 @@ narrowed."
 
 (global-auto-revert-mode 1) ;; you might not want this
 (setq auto-revert-verbose nil) ;; or this
-(global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'revert-buffer)
 
 ;; highlights parentheses
@@ -549,10 +549,6 @@ narrowed."
 (when (member "DejaVu Sans Mono" (font-family-list))
 (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
 ;; Misc Packages:1 ends here
-
-;; [[file:~/.emacs.d/myinit.org::*Move%20Between%20windows][Move Between windows:1]]
-(windmove-default-keybindings)
-;; Move Between windows:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Org%20mode][Org mode:1]]
 (use-package org 
@@ -882,8 +878,6 @@ narrowed."
           treemacs-never-persist              nil
           treemacs-is-never-other-window      nil
           treemacs-goto-tag-strategy          'refetch-index)
-
-    (treemacs-follow-mode t)
     (treemacs-filewatch-mode t))
   :bind
   (:map global-map
