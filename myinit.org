@@ -816,7 +816,8 @@ to use iedit: select region and c-;
 * Silversearcher
 #+BEGIN_SRC emacs-lisp
 (use-package ag
-:ensure t)
+    :ensure t)
+(setq ag-highlight-search t)
 #+END_SRC
 * SmartParens
 #+BEGIN_SRC emacs-lisp
@@ -1020,7 +1021,6 @@ to use iedit: select region and c-;
 
 #+RESULTS:
 : t
-
 * Which Key
   Brings up some help
   #+BEGIN_SRC emacs-lisp

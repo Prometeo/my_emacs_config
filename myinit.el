@@ -734,7 +734,8 @@ narrowed."
 
 ;; [[file:~/.emacs.d/myinit.org::*Silversearcher][Silversearcher:1]]
 (use-package ag
-:ensure t)
+    :ensure t)
+(setq ag-highlight-search t)
 ;; Silversearcher:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*SmartParens][SmartParens:1]]
@@ -878,6 +879,8 @@ narrowed."
           treemacs-never-persist              nil
           treemacs-is-never-other-window      nil
           treemacs-goto-tag-strategy          'refetch-index)
+
+    (treemacs-follow-mode t)
     (treemacs-filewatch-mode t))
   :bind
   (:map global-map
@@ -927,6 +930,11 @@ narrowed."
                            (setq web-mode-enable-block-face t)
 )))
 ;; Web Mode:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Wgrep][Wgrep:1]]
+(use-package wgrep
+    :ensure t)
+;; Wgrep:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Which%20Key][Which Key:1]]
 (use-package which-key
