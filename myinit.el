@@ -732,11 +732,25 @@ narrowed."
 (setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
 ;; Rust:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Silversearcher][Silversearcher:1]]
+;; [[file:~/.emacs.d/myinit.org::*Searching][Searching:1]]
 (use-package ag
     :ensure t)
 (setq ag-highlight-search t)
-;; Silversearcher:1 ends here
+;; anzu configuration
+(use-package anzu
+    :ensure t)
+(global-anzu-mode +1)
+(global-set-key [remap query-replace] 'anzu-query-replace)
+(global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
+(set-face-attribute 'anzu-mode-line nil
+                    :foreground "yellow" :weight 'bold)
+(custom-set-variables
+ '(anzu-mode-lighter "")
+ '(anzu-deactivate-region t)
+ '(anzu-search-threshold 1000)
+ '(anzu-replace-threshold 50)
+ '(anzu-replace-to-string-separator " => "))
+;; Searching:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*SmartParens][SmartParens:1]]
 (use-package smartparens
@@ -930,11 +944,6 @@ narrowed."
                            (setq web-mode-enable-block-face t)
 )))
 ;; Web Mode:1 ends here
-
-;; [[file:~/.emacs.d/myinit.org::*Wgrep][Wgrep:1]]
-(use-package wgrep
-    :ensure t)
-;; Wgrep:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Which%20Key][Which Key:1]]
 (use-package which-key
