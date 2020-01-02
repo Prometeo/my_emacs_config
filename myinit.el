@@ -702,11 +702,23 @@ narrowed."
     :ensure t)
 (use-package company-anaconda
     :ensure t)
+(use-package pyenv-mode
+    :ensure t)
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 
 (defun python--encoding-comment-required-p ()
   (re-search-forward "[^\0-\177]" nil t))
+
+(defun python--detect-encoding ()
+  (let ((coding-system
+         (or save-buffer-coding-system
+             buffer-file-coding-system)))
+    (if coding-system
+        (symbol-name
+         (or (coding-system-get coding-system 'mime-charset)
+             (coding-system-change-eol-conversion coding-system nil)))
+      "ascii-8bit")))
 ;; Python:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Rust][Rust:1]]
