@@ -724,6 +724,9 @@ narrowed."
          (or (coding-system-get coding-system 'mime-charset)
              (coding-system-change-eol-conversion coding-system nil)))
       "ascii-8bit")))
+(use-package yapfify
+    :ensure t)
+(add-hook 'python-mode-hook 'yapf-mode)
 ;; Python:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Rust][Rust:1]]

@@ -786,7 +786,9 @@ to use iedit: select region and c-;
          (or (coding-system-get coding-system 'mime-charset)
              (coding-system-change-eol-conversion coding-system nil)))
       "ascii-8bit")))
-
+(use-package yapfify
+    :ensure t)
+(add-hook 'python-mode-hook 'yapf-mode)
   #+END_SRC
 
   #+RESULTS:
