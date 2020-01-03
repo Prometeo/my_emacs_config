@@ -707,6 +707,7 @@ narrowed."
     :ensure t)
 (use-package pyenv-mode
     :ensure t)
+(add-hook 'python-mode-hook 'pyenv-mode)
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 (eval-after-load "company"
