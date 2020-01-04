@@ -35,16 +35,6 @@
 (use-package auto-yasnippet
 :ensure t)
 #+END_SRC
-* Autocomplete
-  #+BEGIN_SRC emacs-lisp  :tangle no
-     (use-package auto-complete
-     :ensure t
-     :init
-     (progn
-     (ac-config-default)
-       (global-auto-complete-mode t)
-      ))
-  #+END_SRC
 * Avy
 Navigate by searching for a letter on the screen and jumping to it
 See https://github.com/abo-abo/avy for more info
@@ -416,7 +406,7 @@ to use iedit: select region and c-;
     :config
       (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
   ;; Enable cua-mode ctrl-z, ctrl-v ...
-  (cua-mode t)
+  ;; (cua-mode t)
   ;; Coding-system settings
   (set-language-environment 'UTF-8)
   (setq buffer-file-coding-system 'utf-8)

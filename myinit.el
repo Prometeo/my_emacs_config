@@ -363,7 +363,7 @@ narrowed."
   :config
     (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 ;; Enable cua-mode ctrl-z, ctrl-v ...
-(cua-mode t)
+;; (cua-mode t)
 ;; Coding-system settings
 (set-language-environment 'UTF-8)
 (setq buffer-file-coding-system 'utf-8)
