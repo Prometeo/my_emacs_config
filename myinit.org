@@ -426,6 +426,12 @@ to use iedit: select region and c-;
   (set-keyboard-coding-system        'utf-8-unix)
   (set-terminal-coding-system             'utf-8)
   (prefer-coding-system 'utf-8)
+
+  (global-auto-revert-mode 1) 
+  (setq auto-revert-verbose nil)
+  (global-set-key (kbd "<f6>") 'revert-buffer)
+  ;; autocomplete parentheses
+  (electric-pair-mode t)
 #+END_SRC
 * Javascript
 #+BEGIN_SRC emacs-lisp
@@ -546,59 +552,6 @@ to use iedit: select region and c-;
 (key-chord-define-global "qq" 'delete-other-windows)
 (key-chord-define-global "vv" 'save-buffers-kill-terminal)
 #+END_SRC
-* Misc Packages
-  #+BEGIN_SRC emacs-lisp
-  
-  ;; flashes the cursor's line when you scroll
-  (use-package beacon
-    :ensure t
-    :config
-  (beacon-mode 1)
-  (setq beacon-color "#666600"))
-  
-  
-  ;; Highlights the current cursor line
-  (global-hl-line-mode t)
-
-  (global-auto-revert-mode 1) ;; you might not want this
-  (setq auto-revert-verbose nil) ;; or this
-  (global-set-key (kbd "<f6>") 'revert-buffer)
-  
-  ;; highlights parentheses
-  (use-package highlight-parentheses
-  :ensure t
-  :config
-  (highlight-parentheses-mode 1))
-  ;; autocomplete parentheses
-  (electric-pair-mode 1) 
-  ;; mark parentheses
-  (show-paren-mode t)
-
-  ;; Replace "lambda" to λ, function to
-  (global-prettify-symbols-mode 1)
-  ;; Linum plugin
-  ;;(line-number-mode   t) ;; Show line number in mode-line
-  ;;(global-linum-mode t) ;; Show line numbers in all buffers
-
-  ;; font-lock annotations like TODO in source code
-  (use-package hl-todo
-      :ensure t)
-  (global-hl-todo-mode 1)
-  (which-function-mode 1)
-  ;; Paren face
-  (set-face-background 'show-paren-match (face-background 'default))
-  (set-face-foreground 'show-paren-match "#def")
-  (set-face-attribute 'show-paren-match nil :weight 'extra-bold)
-  (use-package rainbow-delimiters
-  :ensure t
-  :config
-  (setq rainbow-delimiters-max-face-count 9))
-  (set-face-attribute 'default nil :height 105)
-
-  (when (member "DejaVu Sans Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
-
-  #+END_SRC
 * Org mode
   Org bullets makes things look pretty
   #+BEGIN_SRC emacs-lisp
@@ -714,7 +667,7 @@ to use iedit: select region and c-;
 * Origami Folding
 #+BEGIN_SRC emacs-lisp
 (use-package origami
-:ensure t)
+  :ensure t)
 #+END_SRC
 #+RESULTS:
 * PDF tools
@@ -949,8 +902,9 @@ to use iedit: select region and c-;
     ))
   #+END_SRC
 
-* Themes and modeline
+* Themes and Visual settings
 #+BEGIN_SRC emacs-lisp 
+(set-face-attribute 'default nil :height 105)
 (use-package lab-themes 
   :ensure t
   :config
@@ -960,6 +914,44 @@ to use iedit: select region and c-;
   :ensure t
   :config
     (powerline-default-theme))
+;; flashes the cursor's line when you scroll
+(use-package beacon
+  :ensure t
+  :config
+    (beacon-mode 1)
+    (setq beacon-color "#666600"))
+;; Highlights the current cursor line
+(global-hl-line-mode t)
+;; highlights parentheses
+(use-package highlight-parentheses
+  :ensure t
+  :config
+    (highlight-parentheses-mode 1))
+;; mark parentheses
+(show-paren-mode t)
+;; Replace "lambda" to λ, function to
+(global-prettify-symbols-mode 1)
+;; Linum plugin
+;;(line-number-mode   t) ;; Show line number in mode-line
+;;(global-linum-mode t) ;; Show line numbers in all buffers
+
+;; font-lock annotations like TODO in source code
+(use-package hl-todo
+  :ensure t)
+(global-hl-todo-mode 1)
+;; display the current function name in the mode line
+(which-function-mode 1)
+;; Paren face
+(set-face-background 'show-paren-match "#FFFFFF")
+(set-face-foreground 'show-paren-match "#def")
+(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
+(use-package rainbow-delimiters
+  :ensure t
+  :config
+    (setq rainbow-delimiters-max-face-count 9))
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(when (member "DejaVu Sans Mono" (font-family-list))
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
 
 #+END_SRC
 * TOML

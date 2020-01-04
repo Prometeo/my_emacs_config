@@ -373,6 +373,12 @@ narrowed."
 (set-keyboard-coding-system        'utf-8-unix)
 (set-terminal-coding-system             'utf-8)
 (prefer-coding-system 'utf-8)
+
+(global-auto-revert-mode 1) 
+(setq auto-revert-verbose nil)
+(global-set-key (kbd "<f6>") 'revert-buffer)
+;; autocomplete parentheses
+(electric-pair-mode t)
 ;; Editing Tweaks:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Javascript][Javascript:1]]
@@ -494,57 +500,6 @@ narrowed."
 (key-chord-define-global "vv" 'save-buffers-kill-terminal)
 ;; Keybindings:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Misc%20Packages][Misc Packages:1]]
-;; flashes the cursor's line when you scroll
-(use-package beacon
-  :ensure t
-  :config
-(beacon-mode 1)
-(setq beacon-color "#666600"))
-
-
-;; Highlights the current cursor line
-(global-hl-line-mode t)
-
-(global-auto-revert-mode 1) ;; you might not want this
-(setq auto-revert-verbose nil) ;; or this
-(global-set-key (kbd "<f6>") 'revert-buffer)
-
-;; highlights parentheses
-(use-package highlight-parentheses
-:ensure t
-:config
-(highlight-parentheses-mode 1))
-;; autocomplete parentheses
-(electric-pair-mode 1) 
-;; mark parentheses
-(show-paren-mode t)
-
-;; Replace "lambda" to λ, function to
-(global-prettify-symbols-mode 1)
-;; Linum plugin
-;;(line-number-mode   t) ;; Show line number in mode-line
-;;(global-linum-mode t) ;; Show line numbers in all buffers
-
-;; font-lock annotations like TODO in source code
-(use-package hl-todo
-    :ensure t)
-(global-hl-todo-mode 1)
-(which-function-mode 1)
-;; Paren face
-(set-face-background 'show-paren-match (face-background 'default))
-(set-face-foreground 'show-paren-match "#def")
-(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
-(use-package rainbow-delimiters
-:ensure t
-:config
-(setq rainbow-delimiters-max-face-count 9))
-(set-face-attribute 'default nil :height 105)
-
-(when (member "DejaVu Sans Mono" (font-family-list))
-(set-face-attribute 'default nil :font "DejaVu Sans Mono"))
-;; Misc Packages:1 ends here
-
 ;; [[file:~/.emacs.d/myinit.org::*Org%20mode][Org mode:1]]
 (use-package org 
   :ensure t
@@ -653,7 +608,7 @@ narrowed."
 
 ;; [[file:~/.emacs.d/myinit.org::*Origami%20Folding][Origami Folding:1]]
 (use-package origami
-:ensure t)
+  :ensure t)
 ;; Origami Folding:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*PDF%20tools][PDF tools:1]]
@@ -864,7 +819,8 @@ narrowed."
   ))
 ;; Swiper / Ivy / Counsel:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Themes%20and%20modeline][Themes and modeline:1]]
+;; [[file:~/.emacs.d/myinit.org::*Themes%20and%20Visual%20settings][Themes and Visual settings:1]]
+(set-face-attribute 'default nil :height 105)
 (use-package lab-themes 
   :ensure t
   :config
@@ -874,7 +830,45 @@ narrowed."
   :ensure t
   :config
     (powerline-default-theme))
-;; Themes and modeline:1 ends here
+;; flashes the cursor's line when you scroll
+(use-package beacon
+  :ensure t
+  :config
+    (beacon-mode 1)
+    (setq beacon-color "#666600"))
+;; Highlights the current cursor line
+(global-hl-line-mode t)
+;; highlights parentheses
+(use-package highlight-parentheses
+  :ensure t
+  :config
+    (highlight-parentheses-mode 1))
+;; mark parentheses
+(show-paren-mode t)
+;; Replace "lambda" to λ, function to
+(global-prettify-symbols-mode 1)
+;; Linum plugin
+;;(line-number-mode   t) ;; Show line number in mode-line
+;;(global-linum-mode t) ;; Show line numbers in all buffers
+
+;; font-lock annotations like TODO in source code
+(use-package hl-todo
+  :ensure t)
+(global-hl-todo-mode 1)
+;; display the current function name in the mode line
+(which-function-mode 1)
+;; Paren face
+(set-face-background 'show-paren-match "#FFFFFF")
+(set-face-foreground 'show-paren-match "#def")
+(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
+(use-package rainbow-delimiters
+  :ensure t
+  :config
+    (setq rainbow-delimiters-max-face-count 9))
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(when (member "DejaVu Sans Mono" (font-family-list))
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+;; Themes and Visual settings:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*TOML][TOML:1]]
 (use-package toml-mode
