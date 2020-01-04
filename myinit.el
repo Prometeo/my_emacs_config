@@ -14,17 +14,17 @@
 (setq aw-background nil)
 (defvar aw-dispatch-alist
   '((?x aw-delete-window "Delete Window")
-	(?m aw-swap-window "Swap Windows")
-	(?M aw-move-window "Move Window")
-	(?c aw-copy-window "Copy Window")
-	(?j aw-switch-buffer-in-window "Select Buffer")
-	(?n aw-flip-window)
-	(?u aw-switch-buffer-other-window "Switch Buffer Other Window")
-	(?c aw-split-window-fair "Split Fair Window")
-	(?v aw-split-window-vert "Split Vert Window")
-	(?b aw-split-window-horz "Split Horz Window")
-	(?o delete-other-windows "Delete Other Windows")
-	(?? aw-show-dispatch-help))
+    (?m aw-swap-window "Swap Windows")
+    (?M aw-move-window "Move Window")
+    (?c aw-copy-window "Copy Window")
+    (?j aw-switch-buffer-in-window "Select Buffer")
+    (?n aw-flip-window)
+    (?u aw-switch-buffer-other-window "Switch Buffer Other Window")
+    (?c aw-split-window-fair "Split Fair Window")
+    (?v aw-split-window-vert "Split Vert Window")
+    (?b aw-split-window-horz "Split Horz Window")
+    (?o delete-other-windows "Delete Other Windows")
+    (?? aw-show-dispatch-help))
   "List of actions for `aw-dispatch-default'.")
 ;; Ace-window:1 ends here
 
@@ -42,7 +42,7 @@
 ;; [[file:~/.emacs.d/myinit.org::*c++][c++:1]]
 (use-package ggtags
 :ensure t
-:config 
+:config
 (add-hook 'c-mode-common-hook
           (lambda ()
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
@@ -68,7 +68,7 @@
 
 (use-package company-irony
 :ensure t
-:config 
+:config
 (add-to-list 'company-backends 'company-irony))
 
 (use-package irony
@@ -121,26 +121,26 @@
 ;; Flycheck:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Hydra][Hydra:1]]
-(use-package hydra 
+(use-package hydra
     :ensure hydra
-    :init 
+    :init
     (global-set-key
     (kbd "C-x t")
-	    (defhydra toggle (:color blue)
-	      "toggle"
-	      ("a" abbrev-mode "abbrev")
-	      ("s" flyspell-mode "flyspell")
-	      ("d" toggle-debug-on-error "debug")
-	      ("c" fci-mode "fCi")
-	      ("f" auto-fill-mode "fill")
-	      ("t" toggle-truncate-lines "truncate")
-	      ("w" whitespace-mode "whitespace")
-	      ("q" nil "cancel")))
+        (defhydra toggle (:color blue)
+          "toggle"
+          ("a" abbrev-mode "abbrev")
+          ("s" flyspell-mode "flyspell")
+          ("d" toggle-debug-on-error "debug")
+          ("c" fci-mode "fCi")
+          ("f" auto-fill-mode "fill")
+          ("t" toggle-truncate-lines "truncate")
+          ("w" whitespace-mode "whitespace")
+          ("q" nil "cancel")))
     (global-set-key
      (kbd "C-x j")
-     (defhydra gotoline 
+     (defhydra gotoline
        ( :pre (linum-mode 1)
-	      :post (linum-mode -1))
+          :post (linum-mode -1))
        "goto"
        ("t" (lambda () (interactive)(move-to-window-line-top-bottom 0)) "top")
        ("b" (lambda () (interactive)(move-to-window-line-top-bottom -1)) "bottom")
@@ -163,7 +163,7 @@
        ("o" org-clock-out "Clock-Out") ; you might also want (setq org-log-note-clock-out t)
        ("j" org-clock-goto "Clock Goto") ; global visit the clocked task
        ("c" org-capture "Capture") ; Don't forget to define the captures you want http://orgmode.org/manual/Capture.html
-	     ("l" (or )rg-capture-goto-last-stored "Last Capture"))
+         ("l" (or )rg-capture-goto-last-stored "Last Capture"))
 
      ))
 
@@ -278,7 +278,7 @@ Git gutter:
 ;; IBUFFER:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Iedit%20and%20narrow%20/%20widen%20dwim][Iedit and narrow / widen dwim:1]]
-; mark and edit all copies of the marked region simultaniously. 
+; mark and edit all copies of the marked region simultaniously.
 (use-package iedit
 :ensure t)
 
@@ -323,7 +323,7 @@ narrowed."
 (setq make-backup-files        nil)
 (setq auto-save-default        nil)
 (setq auto-save-list-file-name nil)
-(setq auto-save-default nil)                  
+(setq auto-save-default nil)
 (setq scroll-preserve-screen-position 10)
 ;; Display the name of the current buffer in the title bar
 (setq frame-title-format "%b")
@@ -337,7 +337,7 @@ narrowed."
 (display-time-mode             t) ;; Show hours in mode-line
 (size-indication-mode t) ;; File size in% -s
 ;; Show column number
-(setq column-number-mode 1) 
+(setq column-number-mode 1)
 ;; Not user GUI dialogs, only minibuffer
 (setq use-dialog-box nil)
 ;; Interface Tweaks:1 ends here
@@ -351,12 +351,12 @@ narrowed."
 ; expand the marked region in semantic increments (negative prefix to reduce region)
 (use-package expand-region
   :ensure t
-  :config 
+  :config
     (global-set-key (kbd "C-=") 'er/expand-region))
 ;; no tabs
 (setq-default indent-tabs-mode nil)
 ;; Replace TAB with 4 spaces
-(setq-default tab-width 4) 
+(setq-default tab-width 4)
 ;; Set aggressive idennt mode
 (use-package aggressive-indent
   :ensure t
@@ -374,7 +374,7 @@ narrowed."
 (set-terminal-coding-system             'utf-8)
 (prefer-coding-system 'utf-8)
 
-(global-auto-revert-mode 1) 
+(global-auto-revert-mode 1)
 (setq auto-revert-verbose nil)
 (global-set-key (kbd "<f6>") 'revert-buffer)
 ;; autocomplete parentheses
@@ -385,6 +385,17 @@ narrowed."
   :config
     (setq confirm-kill-processes nil
         make-backup-files nil))
+;; configuring ediff
+(use-package ediff
+  :ensure nil
+  :config
+    (setq ediff-split-window-function 'split-window-horizontally)
+    (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+    (setq ediff-diff-options "-w"))
+;; cleanup whitespace on save
+(use-package whitespace
+  :ensure nil
+  :hook (before-save . whitespace-cleanup))
 ;; Editing Tweaks:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Javascript][Javascript:1]]
@@ -399,7 +410,7 @@ narrowed."
 
 (use-package js2-refactor
 :ensure t
-:config 
+:config
 (progn
 (js2r-add-keybindings-with-prefix "C-c C-m")
 ;; eg. extract function with `C-c C-m ef`.
@@ -507,7 +518,7 @@ narrowed."
 ;; Keybindings:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Org%20mode][Org mode:1]]
-(use-package org 
+(use-package org
   :ensure t
   :pin org)
 
@@ -528,10 +539,10 @@ narrowed."
              )
 
             (setq org-file-apps
-  		(append '(
-          		  ("\\.pdf\\'" . "evince %s")
+        (append '(
+                  ("\\.pdf\\'" . "evince %s")
  ("\\.x?html?\\'" . "/usr/bin/chromium-browser %s")
-          		  ) org-file-apps ))
+                  ) org-file-apps ))
 
             (global-set-key "\C-ca" 'org-agenda)
             (setq org-agenda-start-on-weekday nil)
@@ -544,53 +555,53 @@ narrowed."
 
             (setq org-agenda-files (list "~/Sync/orgfiles/gcal.org"
             "~/Sync/orgfiles/soe-cal.org"
-          			       "~/Sync/orgfiles/i.org"
-          			       "~/Sync/orgfiles/schedule.org"))
+                           "~/Sync/orgfiles/i.org"
+                           "~/Sync/orgfiles/schedule.org"))
             (setq org-capture-templates
-          			  '(("a" "Appointment" entry (file  "~/Sync/orgfiles/gcal.org" )
-          				   "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
-          				  ("l" "Link" entry (file+headline "~/Sync/orgfiles/links.org" "Links")
-          				   "* %? %^L %^g \n%T" :prepend t)
-          				  ("b" "Blog idea" entry (file+headline "~/Sync/orgfiles/i.org" "Blog Topics:")
-          				   "* %?\n%T" :prepend t)
-          				  ("t" "To Do Item" entry (file+headline "~/Sync/orgfiles/i.org" "To Do and Notes")
-          				   "* TODO %?\n%u" :prepend t)
-  					  ("m" "Mail To Do" entry (file+headline "~/Sync/orgfiles/i.org" "To Do and Notes")
-  					   "* TODO %a\n %?" :prepend t)
-  					  ("g" "GMail To Do" entry (file+headline "~/Sync/orgfiles/i.org" "To Do and Notes")
-  					   "* TODO %^L\n %?" :prepend t)
-  					  ("n" "Note" entry (file+headline "~/Sync/orgfiles/i.org" "Notes")
-          				   "* %u %? " :prepend t)
-  					  ))
+                      '(("a" "Appointment" entry (file  "~/Sync/orgfiles/gcal.org" )
+                           "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+                          ("l" "Link" entry (file+headline "~/Sync/orgfiles/links.org" "Links")
+                           "* %? %^L %^g \n%T" :prepend t)
+                          ("b" "Blog idea" entry (file+headline "~/Sync/orgfiles/i.org" "Blog Topics:")
+                           "* %?\n%T" :prepend t)
+                          ("t" "To Do Item" entry (file+headline "~/Sync/orgfiles/i.org" "To Do and Notes")
+                           "* TODO %?\n%u" :prepend t)
+                      ("m" "Mail To Do" entry (file+headline "~/Sync/orgfiles/i.org" "To Do and Notes")
+                       "* TODO %a\n %?" :prepend t)
+                      ("g" "GMail To Do" entry (file+headline "~/Sync/orgfiles/i.org" "To Do and Notes")
+                       "* TODO %^L\n %?" :prepend t)
+                      ("n" "Note" entry (file+headline "~/Sync/orgfiles/i.org" "Notes")
+                           "* %u %? " :prepend t)
+                      ))
             ;; (setq org-capture-templates
-        ;; 		    '(("a" "Appointment" entry (file  "~/Sync/orgfiles/gcal.org" )
-        ;; 			     "* TODO %?\n:PROPERTIES:\nDEADLINE: %^T \n\n:END:\n %i\n")
-        ;; 			    ("l" "Link" entry (file+headline "~/Sync/orgfiles/links.org" "Links")
-        ;; 			     "* %? %^L %^g \n%T" :prepend t)
-        ;; 			    ("b" "Blog idea" entry (file+headline "~/Sync/orgfiles/i.org" "POSTS:")
-        ;; 			     "* %?\n%T" :prepend t)
-        ;; 			    ("t" "To Do Item" entry (file+headline "~/Sync/orgfiles/i.org" "To Do")
-        ;; 			     "* TODO %?\n%u" :prepend t)
-        ;; 			    ("n" "Note" entry (file+headline "~/Sync/orgfiles/i.org" "Note space")
-        ;; 			     "* %?\n%u" :prepend t)
+        ;;          '(("a" "Appointment" entry (file  "~/Sync/orgfiles/gcal.org" )
+        ;;               "* TODO %?\n:PROPERTIES:\nDEADLINE: %^T \n\n:END:\n %i\n")
+        ;;              ("l" "Link" entry (file+headline "~/Sync/orgfiles/links.org" "Links")
+        ;;               "* %? %^L %^g \n%T" :prepend t)
+        ;;              ("b" "Blog idea" entry (file+headline "~/Sync/orgfiles/i.org" "POSTS:")
+        ;;               "* %?\n%T" :prepend t)
+        ;;              ("t" "To Do Item" entry (file+headline "~/Sync/orgfiles/i.org" "To Do")
+        ;;               "* TODO %?\n%u" :prepend t)
+        ;;              ("n" "Note" entry (file+headline "~/Sync/orgfiles/i.org" "Note space")
+        ;;               "* %?\n%u" :prepend t)
 
-        ;; 			    ("j" "Journal" entry (file+datetree "~/Dropbox/journal.org")
-        ;; 			     "* %?\nEntered on %U\n  %i\n  %a")
+        ;;              ("j" "Journal" entry (file+datetree "~/Dropbox/journal.org")
+        ;;               "* %?\nEntered on %U\n  %i\n  %a")
             ;;                                ("s" "Screencast" entry (file "~/Sync/orgfiles/screencastnotes.org")
             ;;                                "* %?\n%i\n")))
 
 
-        (defadvice org-capture-finalize 
-            (after delete-capture-frame activate)  
-        "Advise capture-finalize to close the frame"  
-        (if (equal "capture" (frame-parameter nil 'name))  
+        (defadvice org-capture-finalize
+            (after delete-capture-frame activate)
+        "Advise capture-finalize to close the frame"
+        (if (equal "capture" (frame-parameter nil 'name))
         (delete-frame)))
 
-        (defadvice org-capture-destroy 
-            (after delete-capture-frame activate)  
-        "Advise capture-destroy to close the frame"  
-        (if (equal "capture" (frame-parameter nil 'name))  
-        (delete-frame)))  
+        (defadvice org-capture-destroy
+            (after delete-capture-frame activate)
+        "Advise capture-destroy to close the frame"
+        (if (equal "capture" (frame-parameter nil 'name))
+        (delete-frame)))
 
         (use-package noflet
         :ensure t )
@@ -812,10 +823,10 @@ narrowed."
 (use-package swiper
 :ensure t
 :bind (("C-s" . swiper)
-       ("C-r" . swiper)
-       ("C-c C-r" . ivy-resume)
-       ("M-x" . counsel-M-x)
-       ("C-x C-f" . counsel-find-file))
+   ("C-r" . swiper)
+   ("C-c C-r" . ivy-resume)
+   ("M-x" . counsel-M-x)
+   ("C-x C-f" . counsel-find-file))
 :config
 (progn
   (ivy-mode 1)
@@ -826,13 +837,13 @@ narrowed."
 ;; Swiper / Ivy / Counsel:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Themes%20and%20Visual%20settings][Themes and Visual settings:1]]
-;; increase line space for better readability
-;; (setq-default line-spacing 3)
-(set-face-attribute 'default nil :height 105)
-(use-package lab-themes 
-  :ensure t
-  :config
-    (lab-themes-load-style 'dark))
+(add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-doom-themes/")
+(load-theme '/themes/doom-one t)
+;; Reduce speed of the mouse wheel
+(use-package mwheel
+  :ensure nil
+  :config (setq mouse-wheel-scroll-amount '(5 ((shift) . 1))
+                mouse-wheel-progressive-speed nil))
 ;; Powerline
 (use-package powerline
   :ensure t
@@ -873,9 +884,24 @@ narrowed."
   :ensure t
   :config
     (setq rainbow-delimiters-max-face-count 9))
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-(when (member "DejaVu Sans Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+(add-hook 'python-mode-hook 'rainbow-delimiters-mode)
+;; (when (member "DejaVu Sans Mono" (font-family-list))
+;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+(when (member "Menlo" (font-family-list))
+  (set-frame-font "menlo-13:weight=regular" t t))
+;; increase line space for better readability
+(setq-default line-spacing 3)
+(set-face-attribute 'default nil :height 105)
+;; Syntax highlighting
+(use-package highlight-numbers
+  :ensure t)
+(add-hook 'prog-mode-hook 'highlight-numbers-mode)
+(use-package highlight-operators
+  :ensure t)
+(add-hook 'prog-mode-hook 'highlight-operators-mode)
+(use-package highlight-escape-sequences
+  :ensure t)
+  (add-hook 'prog-mode-hook 'highlight-escape-sequences-mode)
 ;; Themes and Visual settings:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*TOML][TOML:1]]
@@ -924,7 +950,7 @@ narrowed."
 
 ;; [[file:~/.emacs.d/myinit.org::*Try][Try:1]]
 (use-package try
-	:ensure t)
+    :ensure t)
 ;; Try:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Web%20Mode][Web Mode:1]]
@@ -959,8 +985,8 @@ narrowed."
 
 ;; [[file:~/.emacs.d/myinit.org::*Which%20Key][Which Key:1]]
 (use-package which-key
-      :ensure t 
-      :config
+    :ensure t
+    :config
       (which-key-mode))
 ;; Which Key:1 ends here
 
