@@ -885,24 +885,25 @@ narrowed."
   :ensure t
   :config
     (setq rainbow-delimiters-max-face-count 9))
-(add-hook 'python-mode-hook 'rainbow-delimiters-mode)
-;; (when (member "DejaVu Sans Mono" (font-family-list))
-;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(when (member "DejaVu Sans Mono" (font-family-list))
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono"))
 (when (member "Menlo" (font-family-list))
   (set-frame-font "menlo-13:weight=regular" t t))
 ;; increase line space for better readability
 (setq-default line-spacing 3)
 (set-face-attribute 'default nil :height 105)
+(use-package highlight-indent-guides
+  :ensure t)
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+
 ;; Syntax highlighting
 (use-package highlight-numbers
   :ensure t)
 (add-hook 'prog-mode-hook 'highlight-numbers-mode)
 (use-package highlight-operators
   :ensure t)
-(add-hook 'prog-mode-hook 'highlight-operators-mode)
-(use-package highlight-escape-sequences
-  :ensure t)
-  (add-hook 'prog-mode-hook 'highlight-escape-sequences-mode)
+(add-hook 'python-mode-hook 'highlight-operators-mode)
 ;; Themes and Visual settings:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*TOML][TOML:1]]
