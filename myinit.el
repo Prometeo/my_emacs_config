@@ -314,11 +314,66 @@ narrowed."
 ;; Iedit and narrow / widen dwim:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Interface%20Tweaks][Interface Tweaks:1]]
+;; Emacs Interface
 (setq inhibit-startup-message t)
 (tool-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
-(global-set-key (kbd "<f5>") 'revert-buffer)
+;; Disable backup/autosave files
+(setq backup-inhibited t)
+(setq make-backup-files        nil)
+(setq auto-save-default        nil)
+(setq auto-save-list-file-name nil)
+(setq auto-save-default nil)                  
+(setq scroll-preserve-screen-position 10)
+;; Display the name of the current buffer in the title bar
+(setq frame-title-format "%b")
+;; Fringe settings
+(fringe-mode '(8 . 0)) ;; Text delimiter left only
+(setq-default indicate-buffer-boundaries 'left) ;; Indication only on the left
+(setq visible-bell t) ;; show bell when top or bottom
+(scroll-bar-mode -1) ;; Disable scrollbar
+;; Display file size/time in mode-line
+(setq display-time-24hr-format t) ;; 24-hour time format in mode-lin
+(display-time-mode             t) ;; Show hours in mode-line
+(size-indication-mode t) ;; File size in% -s
+;; Show column number
+(setq column-number-mode 1) 
+;; Not user GUI dialogs, only minibuffer
+(setq use-dialog-box nil)
 ;; Interface Tweaks:1 ends here
+
+;; [[file:~/.emacs.d/myinit.org::*Editing%20Tweaks][Editing Tweaks:1]]
+;; deletes all the whitespace when you hit backspace or delete
+(use-package hungry-delete
+  :ensure t
+  :config
+    (global-hungry-delete-mode))
+; expand the marked region in semantic increments (negative prefix to reduce region)
+(use-package expand-region
+  :ensure t
+  :config 
+    (global-set-key (kbd "C-=") 'er/expand-region))
+;; no tabs
+(setq-default indent-tabs-mode nil)
+;; Replace TAB with 4 spaces
+(setq-default tab-width 4) 
+;; Set aggressive idennt mode
+(use-package aggressive-indent
+  :ensure t
+  :config
+    (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+;; Enable cua-mode ctrl-z, ctrl-v ...
+(cua-mode t)
+;; Coding-system settings
+(set-language-environment 'UTF-8)
+(setq buffer-file-coding-system 'utf-8)
+(setq-default coding-system-for-read    'utf-8)
+(setq file-name-coding-system           'utf-8)
+(set-selection-coding-system            'utf-8)
+(set-keyboard-coding-system        'utf-8-unix)
+(set-terminal-coding-system             'utf-8)
+(prefer-coding-system 'utf-8)
+;; Editing Tweaks:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Javascript][Javascript:1]]
 (use-package js2-mode
@@ -440,35 +495,16 @@ narrowed."
 ;; Keybindings:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Misc%20Packages][Misc Packages:1]]
-; Highlights the current cursor line
-(global-hl-line-mode t)
-
-; flashes the cursor's line when you scroll
+;; flashes the cursor's line when you scroll
 (use-package beacon
-:ensure t
-:config
+  :ensure t
+  :config
 (beacon-mode 1)
-; (setq beacon-color "#666600")
-)
-
-; deletes all the whitespace when you hit backspace or delete
-(use-package hungry-delete
-:ensure t
-:config
-(global-hungry-delete-mode))
+(setq beacon-color "#666600"))
 
 
-(use-package multiple-cursors
-:ensure t)
-
-; expand the marked region in semantic increments (negative prefix to reduce region)
-(use-package expand-region
-:ensure t
-:config 
-(global-set-key (kbd "C-=") 'er/expand-region))
-
-(setq save-interprogram-paste-before-kill t)
-
+;; Highlights the current cursor line
+(global-hl-line-mode t)
 
 (global-auto-revert-mode 1) ;; you might not want this
 (setq auto-revert-verbose nil) ;; or this
@@ -478,67 +514,23 @@ narrowed."
 (use-package highlight-parentheses
 :ensure t
 :config
-(highlight-parentheses-mode 1)
-)
+(highlight-parentheses-mode 1))
 ;; autocomplete parentheses
 (electric-pair-mode 1) 
 ;; mark parentheses
 (show-paren-mode t)
-;; Show column number
-(setq column-number-mode 1) 
-;; Not user GUI dialogs, only minibuffer
-(setq use-dialog-box nil)
-;; Do not use tabs
-(setq-default indent-tabs-mode nil)
-;; Replace TAB with 4 spaces
-(setq-default tab-width 4) 
-;; Set aggressive idennt mode
-(use-package aggressive-indent
-:ensure t
-:config
-(add-to-list 'aggressive-indent-excluded-modes 'html-mode))
-;; Enable cua-mode ctrl-z, ctrl-v ...
-(cua-mode 1)
-;; Disable backup/autosave files
-(setq backup-inhibited t)
-(setq make-backup-files        nil)
-(setq auto-save-default        nil)
-(setq auto-save-list-file-name nil)
-(setq auto-save-default nil)                  
-(setq scroll-preserve-screen-position 10)
+
 ;; Replace "lambda" to λ, function to
 (global-prettify-symbols-mode 1)
-;; Display the name of the current buffer in the title bar
-(setq frame-title-format "%b")
-;; Coding-system settings
-(set-language-environment 'UTF-8)
-(setq buffer-file-coding-system 'utf-8)
-(setq-default coding-system-for-read    'utf-8)
-(setq file-name-coding-system           'utf-8)
-(set-selection-coding-system            'utf-8)
-(set-keyboard-coding-system        'utf-8-unix)
-(set-terminal-coding-system             'utf-8)
-(prefer-coding-system 'utf-8)
 ;; Linum plugin
 ;;(line-number-mode   t) ;; Show line number in mode-line
 ;;(global-linum-mode t) ;; Show line numbers in all buffers
+
 ;; font-lock annotations like TODO in source code
 (use-package hl-todo
     :ensure t)
 (global-hl-todo-mode 1)
 (which-function-mode 1)
-;; Fringe settings
-(fringe-mode '(8 . 0)) ;; Text delimiter left only
-(setq-default indicate-buffer-boundaries 'left) ;; Indication only on the left
-(setq visible-bell t) ;; show bell when top or bottom
-(scroll-bar-mode -1) ;; Disable scrollbar
-;; Fringe settings
-(fringe-mode '(8 . 0)) ;; Text delimiter left only
-(setq-default indicate-buffer-boundaries 'left) ;; Indication only on the left
-;; Display file size/time in mode-line
-(setq display-time-24hr-format t) ;; 24-hour time format in mode-lin
-(display-time-mode             t) ;; Show hours in mode-line
-(size-indication-mode t) ;; File size in% -s
 ;; Paren face
 (set-face-background 'show-paren-match (face-background 'default))
 (set-face-foreground 'show-paren-match "#def")
@@ -873,18 +865,15 @@ narrowed."
 ;; Swiper / Ivy / Counsel:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Themes%20and%20modeline][Themes and modeline:1]]
-;;
 (use-package lab-themes 
-:ensure t
-:config
-(lab-themes-load-style 'dark)
-)
+  :ensure t
+  :config
+    (lab-themes-load-style 'dark))
 ;; Powerline
 (use-package powerline
-:ensure t
-:config
-(powerline-default-theme)
-)
+  :ensure t
+  :config
+    (powerline-default-theme))
 ;; Themes and modeline:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*TOML][TOML:1]]
