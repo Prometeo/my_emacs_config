@@ -873,7 +873,17 @@ narrowed."
 
 ;; font-lock annotations like TODO in source code
 (use-package hl-todo
-  :ensure t)
+  :ensure t
+  :config
+    (setq hl-todo-highlight-punctuation ":"
+      hl-todo-keyword-faces
+      `(("TODO"       warning bold)
+        ("FIXME"      error bold)
+        ("HACK"       font-lock-constant-face bold)
+        ("REVIEW"     font-lock-keyword-face bold)
+        ("NOTE"       success bold)
+        ("DEPRECATED" font-lock-doc-face bold))))
+
 (global-hl-todo-mode 1)
 ;; display the current function name in the mode line
 (which-function-mode 1)
@@ -894,8 +904,13 @@ narrowed."
 (setq-default line-spacing 3)
 (set-face-attribute 'default nil :height 105)
 (use-package highlight-indent-guides
-  :ensure t)
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+  :ensure t
+  :hook ((prog-mode text-mode conf-mode) . highlight-indent-guides-mode)
+  :init
+    (setq highlight-indent-guides-method 'character)
+  :config
+    (add-hook 'focus-in-hook #'highlight-indent-guides-auto-set-faces))
+;; (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
 ;; Syntax highlighting
 (use-package highlight-numbers
