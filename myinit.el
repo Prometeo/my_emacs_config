@@ -379,6 +379,12 @@ narrowed."
 (global-set-key (kbd "<f6>") 'revert-buffer)
 ;; autocomplete parentheses
 (electric-pair-mode t)
+;; Don’t bother confirming killing processes and don’t let backup~ files scatter around
+(use-package files
+  :ensure nil
+  :config
+    (setq confirm-kill-processes nil
+        make-backup-files nil))
 ;; Editing Tweaks:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Javascript][Javascript:1]]
@@ -820,6 +826,8 @@ narrowed."
 ;; Swiper / Ivy / Counsel:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Themes%20and%20Visual%20settings][Themes and Visual settings:1]]
+;; increase line space for better readability
+;; (setq-default line-spacing 3)
 (set-face-attribute 'default nil :height 105)
 (use-package lab-themes 
   :ensure t
