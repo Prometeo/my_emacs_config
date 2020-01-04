@@ -837,13 +837,14 @@ narrowed."
 ;; Swiper / Ivy / Counsel:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Themes%20and%20Visual%20settings][Themes and Visual settings:1]]
-(add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-doom-themes/")
-(load-theme '/themes/doom-one t)
+(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
+(load-theme 'nord t)
 ;; Reduce speed of the mouse wheel
 (use-package mwheel
   :ensure nil
   :config (setq mouse-wheel-scroll-amount '(5 ((shift) . 1))
                 mouse-wheel-progressive-speed nil))
+(load-theme 'nord t)
 ;; Powerline
 (use-package powerline
   :ensure t

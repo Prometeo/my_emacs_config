@@ -922,8 +922,8 @@ to use iedit: select region and c-;
 * Themes and Visual settings
 #+BEGIN_SRC emacs-lisp
 
-  (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-doom-themes/themes/")
-  ;;(load-theme 'doom-one-theme t)
+  (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
+  (load-theme 'nord t)
   ;; Reduce speed of the mouse wheel
   (use-package mwheel
     :ensure nil

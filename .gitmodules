@@ -1,3 +1,6 @@
 [submodule "snippets"]
     path = snippets
     url = git@github.com:Prometeo/snippets.git
+[submodule "themes"]
+	path = themes
+	url = git@github.com:Prometeo/nord-emacs.git
