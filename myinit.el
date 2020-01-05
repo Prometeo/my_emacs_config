@@ -1,6 +1,7 @@
 ;; [[file:~/.emacs.d/myinit.org::*Repos][Repos:1]]
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-;; temporarily disable check signature
+;; temporarily disable check signature and set tls related to gnu-elpa-keyrign error
+;; this is supossed to be fixed on emacs26.3
 (setq package-check-signature nil)
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 ;; Repos:1 ends here
@@ -738,7 +739,21 @@ narrowed."
 (use-package rustic
   :ensure t
   :mode ("\\.rs$\\'" . rustic-mode)
-  :commands rustic-run-cargo-command rustic-cargo-outdated)
+  :commands rustic-run-cargo-command rustic-cargo-outdated
+  :config
+    (setq rustic-indent-method-chain t
+      rustic-flycheck-setup-mode-line-p nil
+      ;; use :editor format instead
+      rustic-format-trigger nil
+      ;; REVIEW `rust-ordinary-lt-gt-p' is terribly expensive in large rust
+      ;;        buffers, so we disable it, but only for evil users, because it
+      ;;        affects `forward-sexp' and its ilk. See
+      ;;        https://github.com/rust-lang/rust-mode/issues/288.
+      rustic-match-angle-brackets (not (featurep! :editor evil))
+      ;; We use the superior default client provided by `lsp-mode', not the
+      ;; one rustic-mode sets up for us.
+      rustic-lsp-client nil)
+      (add-hook 'rustic-mode-hook #'rainbow-delimiters-mode))
 ;; Rust:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Searching][Searching:1]]
