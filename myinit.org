@@ -896,9 +896,6 @@ to use iedit: select region and c-;
    :map ivy-minibuffer-map
    ("M-y" . ivy-next-line)))
 
-
-
-
   (use-package ivy
   :ensure t
   :diminish (ivy-mode)
@@ -908,7 +905,6 @@ to use iedit: select region and c-;
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "%d/%d ")
   (setq ivy-display-style 'fancy))
-
 
   (use-package swiper
   :ensure t

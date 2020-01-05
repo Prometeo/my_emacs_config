@@ -1,4 +1,3 @@
-
 ### Emacs ###
 # -*- mode: gitignore; -*-
 *~
@@ -18,7 +17,7 @@ session.*
 anaconda-mode/
 projectile-bookmarks.eld
 transient/
-
+prescient-items
 
 # Org-mode
 .org-id-locations
