@@ -1,5 +1,8 @@
 ;; [[file:~/.emacs.d/myinit.org::*Repos][Repos:1]]
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+;; temporarily disable check signature
+(setq package-check-signature nil)
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 ;; Repos:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Ansible][Ansible:1]]
@@ -80,10 +83,6 @@
       (prescient-filter-method '(literal regexp))
   :config
     (prescient-persist-mode 1))
-
-(use-package company-dict
-  :ensure t)
-(setq company-dict-dir (concat user-emacs-directory "dict/"))
 
 
   (use-package company-irony
@@ -715,26 +714,31 @@ narrowed."
 ;; Python:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Rust][Rust:1]]
-(use-package rust-mode
-  :ensure t)
-(use-package flymake-rust
-  :ensure t)
-(use-package flycheck-rust
-  :ensure t)
-(use-package racer
-  :ensure t)
-(use-package cargo
-  :ensure t)
-(add-to-list 'load-path "/path/to/rust-mode/")
-(autoload 'rust-mode "rust-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-(with-eval-after-load 'rust-mode
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-  (add-hook 'rust-mode-hook 'cargo-minor-mode)
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode))
-(setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+;; (use-package rust-mode
+;;   :ensure t)
+;; (use-package flymake-rust
+;;   :ensure t)
+;; (use-package flycheck-rust
+;;   :ensure t)
+;; (use-package racer
+;;   :ensure t)
+;; (use-package cargo
+;;   :ensure t)
+;; (add-to-list 'load-path "/path/to/rust-mode/")
+;; (autoload 'rust-mode "rust-mode" nil t)
+;; (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+;; (with-eval-after-load 'rust-mode
+;;   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+;;   (add-hook 'rust-mode-hook 'cargo-minor-mode)
+;;   (add-hook 'rust-mode-hook #'racer-mode)
+;;   (add-hook 'racer-mode-hook #'eldoc-mode)
+;;   (add-hook 'racer-mode-hook #'company-mode))
+;; (setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(use-package rustic
+  :ensure t
+  :mode ("\\.rs$\\'" . rustic-mode)
+  :commands rustic-run-cargo-command rustic-cargo-outdated)
 ;; Rust:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Searching][Searching:1]]
@@ -826,9 +830,6 @@ narrowed."
  :map ivy-minibuffer-map
  ("M-y" . ivy-next-line)))
 
-
-
-
 (use-package ivy
 :ensure t
 :diminish (ivy-mode)
@@ -838,7 +839,6 @@ narrowed."
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "%d/%d ")
 (setq ivy-display-style 'fancy))
-
 
 (use-package swiper
 :ensure t

@@ -2,7 +2,11 @@
 #+PROPERTY: header-args :comments yes :results silent
 * Repos
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+  ;; temporarily disable check signature and set tls related to gnu-elpa-keyrign error
+  ;; this is supossed to be fixed on emacs26.3
+  (setq package-check-signature nil)
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 #+END_SRC
 * Ansible
 #+BEGIN_SRC emacs-lisp
@@ -781,26 +785,31 @@ to use iedit: select region and c-;
   : t
 * Rust
 #+BEGIN_SRC emacs-lisp
-(use-package rust-mode
-  :ensure t)
-(use-package flymake-rust
-  :ensure t)
-(use-package flycheck-rust
-  :ensure t)
-(use-package racer
-  :ensure t)
-(use-package cargo
-  :ensure t)
-(add-to-list 'load-path "/path/to/rust-mode/")
-(autoload 'rust-mode "rust-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-(with-eval-after-load 'rust-mode
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-  (add-hook 'rust-mode-hook 'cargo-minor-mode)
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode))
-(setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+  ;; (use-package rust-mode
+  ;;   :ensure t)
+  ;; (use-package flymake-rust
+  ;;   :ensure t)
+  ;; (use-package flycheck-rust
+  ;;   :ensure t)
+  ;; (use-package racer
+  ;;   :ensure t)
+  ;; (use-package cargo
+  ;;   :ensure t)
+  ;; (add-to-list 'load-path "/path/to/rust-mode/")
+  ;; (autoload 'rust-mode "rust-mode" nil t)
+  ;; (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+  ;; (with-eval-after-load 'rust-mode
+  ;;   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  ;;   (add-hook 'rust-mode-hook 'cargo-minor-mode)
+  ;;   (add-hook 'rust-mode-hook #'racer-mode)
+  ;;   (add-hook 'racer-mode-hook #'eldoc-mode)
+  ;;   (add-hook 'racer-mode-hook #'company-mode))
+  ;; (setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+  (use-package rustic
+    :ensure t
+    :mode ("\\.rs$\\'" . rustic-mode)
+    :commands rustic-run-cargo-command rustic-cargo-outdated)
 
 #+END_SRC
 * Searching
