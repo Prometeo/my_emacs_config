@@ -34,7 +34,10 @@
  '(org-startup-indented t)
  '(package-selected-packages
    (quote
-    (highlight-escape-sequences highlight-operators highlight-numbers company-quickhelp aggressive-indent aggressive-indent-mode projectile zerodark-theme zenburn-theme which-key web-mode virtualenvwrapper use-package undo-tree try tern-auto-complete tao-theme poet-theme org-bullets noflet moe-theme js2-refactor irony-eldoc iedit hungry-delete htmlize flycheck faff-theme expand-region emmet-mode elpy doom-themes doom-modeline counsel company-jedi company-irony color-theme-modern beacon base16-theme avy alect-themes ac-js2))))
+    (highlight-escape-sequences highlight-operators highlight-numbers company-quickhelp aggressive-indent aggressive-indent-mode projectile zerodark-theme zenburn-theme which-key web-mode virtualenvwrapper use-package undo-tree try tern-auto-complete tao-theme poet-theme org-bullets noflet moe-theme js2-refactor irony-eldoc iedit hungry-delete htmlize flycheck faff-theme expand-region emmet-mode elpy doom-themes doom-modeline counsel company-jedi company-irony color-theme-modern beacon base16-theme avy alect-themes ac-js2)))
+ '(prescient-filter-method (quote (literal regexp)))
+ '(prescient-history-length 200)
+ '(prescient-save-file "~/.emacs.d/prescient-items"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

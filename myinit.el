@@ -52,36 +52,56 @@
 
 ;; [[file:~/.emacs.d/myinit.org::*Company][Company:1]]
 (use-package company
+      :ensure t
+      :config
+          (setq company-idle-delay 0)
+          (setq company-minimum-prefix-length 2)
+          (setq company-show-numbers t)
+          (setq company-tooltip-limit 10)
+          (setq company-tooltip-align-annotations t)
+          (setq company-tooltip-flip-when-above t)
+          company-backends '(company-capf company-dabbrev company-files)
+          company-frontends
+          '(company-pseudo-tooltip-frontend
+          company-echo-metadata-frontend)
+          (global-company-mode t))
+  ;; Shows documnetations popup
+  (use-package company-quickhelp
+      :ensure t)
+  (company-quickhelp-mode 1)
+  (setq company-quickhelp-delay 0)
+
+;; This tool provides a filtering and scoring system
+(use-package prescient
     :ensure t
-    :config
-        (setq company-idle-delay 0)
-        (setq company-minimum-prefix-length 0)
-        (setq company-show-numbers t)
-        (setq company-tooltip-limit 10)
-        (setq company-tooltip-align-annotations t)
-        (setq company-tooltip-flip-when-above t)
-        (global-company-mode t))
-(use-package company-quickhelp
-    :ensure t)
-(company-quickhelp-mode 1)
-(setq company-quickhelp-delay 0)
+    :custom
+      (prescient-history-length 200)
+      (prescient-save-file "~/.emacs.d/prescient-items")
+      (prescient-filter-method '(literal regexp))
+  :config
+    (prescient-persist-mode 1))
 
-(use-package company-irony
-:ensure t
-:config
-(add-to-list 'company-backends 'company-irony))
+(use-package company-dict
+  :ensure t)
+(setq company-dict-dir (concat user-emacs-directory "dict/"))
 
-(use-package irony
-:ensure t
-:config
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
-(use-package irony-eldoc
-:ensure t
-:config
-(add-hook 'irony-mode-hook #'irony-eldoc))
+  (use-package company-irony
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-irony))
+
+  (use-package irony
+  :ensure t
+  :config
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+
+  (use-package irony-eldoc
+  :ensure t
+  :config
+  (add-hook 'irony-mode-hook #'irony-eldoc))
 ;; Company:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*DIRED][DIRED:1]]
