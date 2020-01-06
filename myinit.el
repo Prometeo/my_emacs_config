@@ -715,45 +715,45 @@ narrowed."
 ;; Python:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Rust][Rust:1]]
-;; (use-package rust-mode
-;;   :ensure t)
-;; (use-package flymake-rust
-;;   :ensure t)
-;; (use-package flycheck-rust
-;;   :ensure t)
-;; (use-package racer
-;;   :ensure t)
-;; (use-package cargo
-;;   :ensure t)
-;; (add-to-list 'load-path "/path/to/rust-mode/")
-;; (autoload 'rust-mode "rust-mode" nil t)
-;; (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-;; (with-eval-after-load 'rust-mode
-;;   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-;;   (add-hook 'rust-mode-hook 'cargo-minor-mode)
-;;   (add-hook 'rust-mode-hook #'racer-mode)
-;;   (add-hook 'racer-mode-hook #'eldoc-mode)
-;;   (add-hook 'racer-mode-hook #'company-mode))
-;; (setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-(use-package rustic
-  :ensure t
-  :mode ("\\.rs$\\'" . rustic-mode)
-  :commands rustic-run-cargo-command rustic-cargo-outdated
-  :config
-    (setq rustic-indent-method-chain t
-      rustic-flycheck-setup-mode-line-p nil
-      ;; use :editor format instead
-      rustic-format-trigger nil
-      ;; REVIEW `rust-ordinary-lt-gt-p' is terribly expensive in large rust
-      ;;        buffers, so we disable it, but only for evil users, because it
-      ;;        affects `forward-sexp' and its ilk. See
-      ;;        https://github.com/rust-lang/rust-mode/issues/288.
-      rustic-match-angle-brackets (not (featurep! :editor evil))
-      ;; We use the superior default client provided by `lsp-mode', not the
-      ;; one rustic-mode sets up for us.
-      rustic-lsp-client nil)
-      (add-hook 'rustic-mode-hook #'rainbow-delimiters-mode))
+(use-package rust-mode
+  :ensure t)
+(use-package flymake-rust
+  :ensure t)
+(use-package flycheck-rust
+  :ensure t)
+(use-package racer
+  :ensure t)
+(use-package cargo
+  :ensure t)
+(add-to-list 'load-path "/path/to/rust-mode/")
+(autoload 'rust-mode "rust-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  (add-hook 'rust-mode-hook 'cargo-minor-mode)
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode))
+(setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+
+;; (use-package rustic
+;;   :ensure t
+;;   :mode ("\\.rs$\\'" . rustic-mode)
+;;   :commands rustic-run-cargo-command rustic-cargo-outdated
+;;   :config
+;;     (setq rustic-indent-method-chain t
+;;       rustic-flycheck-setup-mode-line-p nil
+;;       ;; use :editor format instead
+;;       rustic-format-trigger nil
+;;       ;; REVIEW `rust-ordinary-lt-gt-p' is terribly expensive in large rust
+;;       ;;        buffers, so we disable it, but only for evil users, because it
+;;       ;;        affects `forward-sexp' and its ilk. See
+;;       ;;        https://github.com/rust-lang/rust-mode/issues/288.
+;;       rustic-match-angle-brackets (not (featurep! :editor evil))
+;;       ;; We use the superior default client provided by `lsp-mode', not the
+;;       ;; one rustic-mode sets up for us.
+;;       rustic-lsp-client nil)
+;;       (add-hook 'rustic-mode-hook #'rainbow-delimiters-mode))
 ;; Rust:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Searching][Searching:1]]
