@@ -221,16 +221,15 @@
   ))
 
   (use-package git-gutter
-  :ensure t
-  :init
-  (global-git-gutter-mode +1))
+    :ensure t
+    :init
+      (global-git-gutter-mode +1))
 
   (global-set-key (kbd "M-g M-g") 'hydra-git-gutter/body)
 
 
   (use-package git-timemachine
-  :ensure t
-  )
+    :ensure t)
 (defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
                             :hint nil)
   "
@@ -258,6 +257,11 @@ Git gutter:
               (sit-for 0.1)
               (git-gutter:clear))
        :color blue))
+
+(use-package gitignore-mode
+  :ensure t)
+(use-package gitignore-templates
+  :ensure t)
 ;; Git:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*IBUFFER][IBUFFER:1]]

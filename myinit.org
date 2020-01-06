@@ -461,6 +461,8 @@ to use iedit: select region and c-;
   (use-package whitespace
     :ensure nil
     :hook (before-save . whitespace-cleanup))
+  ;; remap c-z to undo
+  (global-set-key (kbd "C-z") 'undo)
 
 #+END_SRC
 * Javascript
