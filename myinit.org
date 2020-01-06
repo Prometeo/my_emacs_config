@@ -252,16 +252,15 @@ See https://github.com/abo-abo/avy for more info
     ))
 
     (use-package git-gutter
-    :ensure t
-    :init
-    (global-git-gutter-mode +1))
+      :ensure t
+      :init
+        (global-git-gutter-mode +1))
 
     (global-set-key (kbd "M-g M-g") 'hydra-git-gutter/body)
 
 
     (use-package git-timemachine
-    :ensure t
-    )
+      :ensure t)
   (defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
                               :hint nil)
     "
@@ -290,7 +289,10 @@ See https://github.com/abo-abo/avy for more info
                 (git-gutter:clear))
          :color blue))
 
-
+  (use-package gitignore-mode
+    :ensure t)
+  (use-package gitignore-templates
+    :ensure t)
 
 #+END_SRC
 
