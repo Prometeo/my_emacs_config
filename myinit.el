@@ -691,33 +691,6 @@ narrowed."
 ;; Projectile:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Python][Python:1]]
-;; (use-package anaconda-mode
-;;     :ensure t)
-;; (use-package company-anaconda
-;;     :ensure t)
-;; (use-package pyenv-mode
-;;     :ensure t)
-;; (add-hook 'python-mode-hook 'pyenv-mode)
-;; (add-hook 'python-mode-hook 'anaconda-mode)
-;; ;; (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
-
-
-;; (defun python--encoding-comment-required-p ()
-;;   (re-search-forward "[^\0-\177]" nil t))
-
-;; (defun python--detect-encoding ()
-;;   (let ((coding-system
-;;          (or save-buffer-coding-system
-;;              buffer-file-coding-system)))
-;;     (if coding-system
-;;         (symbol-name
-;;          (or (coding-system-get coding-system 'mime-charset)
-;;              (coding-system-change-eol-conversion coding-system nil)))
-;;       "ascii-8bit")))
-;; (use-package yapfify
-;;     :ensure t)
-;; (add-hook 'python-mode-hook 'yapf-mode)
-
 (setq py-python-command "python3")
 (setq python-shell-interpreter "python3")
 (use-package elpy
