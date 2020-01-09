@@ -422,6 +422,7 @@ narrowed."
   :hook (before-save . whitespace-cleanup))
 ;; remap c-z to undo
 (global-set-key (kbd "C-z") 'undo)
+(delete-selection-mode t)
 ;; Editing Tweaks:1 ends here
 
 ;; [[file:~/.emacs.d/myinit.org::*Javascript][Javascript:1]]

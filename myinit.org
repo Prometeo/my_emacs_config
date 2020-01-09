@@ -463,7 +463,7 @@ to use iedit: select region and c-;
     :hook (before-save . whitespace-cleanup))
   ;; remap c-z to undo
   (global-set-key (kbd "C-z") 'undo)
-
+  (delete-selection-mode t)
 #+END_SRC
 * Javascript
 #+BEGIN_SRC emacs-lisp
