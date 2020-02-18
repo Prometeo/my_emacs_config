@@ -66,3 +66,4 @@ node_modules
 
 
 # Python environment
+elpy/*

@@ -1,5 +1,30 @@
 #+STARTUP: overview
 #+PROPERTY: header-args :comments yes :results silent
+* My Emacs Configuration
+** About
+It's built using [[http://orgmode.org][Org mode]]'s [[http://orgmode.org/manual/Extracting-source-code.html#Extracting-source-code][tangling functionality]].
+
+My entire Emacs configuration is thus written in a [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] style,
+and is contained entirely in this file.
+
+*** Requirements
+- [[https://git-scm.com/]]
+- npm
+- python
+- [[https://github.com/ggreer/the_silver_searcher]]
+- https://pypi.org/project/pip/
+  - [[https://virtualenv.pypa.io/en/latest/]]
+
+***  License and copyright
+
+Copyright 2010 Xairi Valdivia.
+
+Files are licensed under the same license as Emacs (GPL) unless
+otherwise specified.
+
+Any external/third party works included in this work are licensed under
+their own licenses - refer to the submodules or packages for more
+information.
 * Repos
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
