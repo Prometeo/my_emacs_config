@@ -1130,3 +1130,13 @@ to use iedit: select region and c-;
     (yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
 
   #+END_SRC
+* MARKDOWN mode
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :ensure t
+    :commands (markdown-mode gfm-mode)
+    :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
+ #+END_SRC

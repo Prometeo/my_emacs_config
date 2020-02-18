@@ -1,4 +1,4 @@
-;; [[file:~/.emacs.d/myinit.org::*Repos][Repos:1]]
+;; [[file:~/.emacs.d/README.org::*Repos][Repos:1]]
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 ;; temporarily disable check signature and set tls related to gnu-elpa-keyrign error
 ;; this is supossed to be fixed on emacs26.3
@@ -6,12 +6,12 @@
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 ;; Repos:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Ansible][Ansible:1]]
+;; [[file:~/.emacs.d/README.org::*Ansible][Ansible:1]]
 (use-package ansible
 :ensure t)
 ;; Ansible:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Ace-window][Ace-window:1]]
+;; [[file:~/.emacs.d/README.org::*Ace-window][Ace-window:1]]
 (use-package ace-window
     :ensure t)
 (global-set-key (kbd "M-o") 'ace-window)
@@ -32,18 +32,18 @@
   "List of actions for `aw-dispatch-default'.")
 ;; Ace-window:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Auto-yasnippet][Auto-yasnippet:1]]
+;; [[file:~/.emacs.d/README.org::*Auto-yasnippet][Auto-yasnippet:1]]
 (use-package auto-yasnippet
 :ensure t)
 ;; Auto-yasnippet:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Avy][Avy:1]]
+;; [[file:~/.emacs.d/README.org::*Avy][Avy:1]]
 (use-package avy
   :ensure t
   :bind ("M-s" . avy-goto-word-1)) ;; changed from char as per jcs
 ;; Avy:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*c++][c++:1]]
+;; [[file:~/.emacs.d/README.org::*c++][c++:1]]
 (use-package ggtags
 :ensure t
 :config
@@ -54,7 +54,7 @@
 )
 ;; c++:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Company][Company:1]]
+;; [[file:~/.emacs.d/README.org::*Company][Company:1]]
 (use-package company
       :ensure t
       :config
@@ -104,7 +104,7 @@
   (add-hook 'irony-mode-hook #'irony-eldoc))
 ;; Company:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*DIRED][DIRED:1]]
+;; [[file:~/.emacs.d/README.org::*DIRED][DIRED:1]]
 ; wiki melpa problem
 ;(use-package dired+
 ;  :ensure t
@@ -112,13 +112,13 @@
 ;  )
 ;; DIRED:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Docker][Docker:1]]
+;; [[file:~/.emacs.d/README.org::*Docker][Docker:1]]
 (use-package dockerfile-mode
 :ensure t)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 ;; Docker:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Emmet%20mode][Emmet mode:1]]
+;; [[file:~/.emacs.d/README.org::*Emmet%20mode][Emmet mode:1]]
 (use-package emmet-mode
 :ensure t
 :config
@@ -133,14 +133,14 @@
 )
 ;; Emmet mode:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Flycheck][Flycheck:1]]
+;; [[file:~/.emacs.d/README.org::*Flycheck][Flycheck:1]]
 (use-package flycheck
   :ensure t
   :init
   (global-flycheck-mode t))
 ;; Flycheck:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Hydra][Hydra:1]]
+;; [[file:~/.emacs.d/README.org::*Hydra][Hydra:1]]
 (use-package hydra
     :ensure hydra
     :init
@@ -212,7 +212,7 @@
   ("<drag-mouse-1>" ignore))
 ;; Hydra:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Git][Git:1]]
+;; [[file:~/.emacs.d/README.org::*Git][Git:1]]
 (use-package magit
   :ensure t
   :init
@@ -264,7 +264,7 @@ Git gutter:
   :ensure t)
 ;; Git:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*IBUFFER][IBUFFER:1]]
+;; [[file:~/.emacs.d/README.org::*IBUFFER][IBUFFER:1]]
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (setq ibuffer-saved-filter-groups
       (quote (("default"
@@ -301,7 +301,7 @@ Git gutter:
 (setq ibuffer-expert t)
 ;; IBUFFER:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Iedit%20and%20narrow%20/%20widen%20dwim][Iedit and narrow / widen dwim:1]]
+;; [[file:~/.emacs.d/README.org::*Iedit%20and%20narrow%20/%20widen%20dwim][Iedit and narrow / widen dwim:1]]
 ; mark and edit all copies of the marked region simultaniously.
 (use-package iedit
 :ensure t)
@@ -337,7 +337,7 @@ narrowed."
 (define-key ctl-x-map "n" #'narrow-or-widen-dwim)
 ;; Iedit and narrow / widen dwim:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Interface%20Tweaks][Interface Tweaks:1]]
+;; [[file:~/.emacs.d/README.org::*Interface%20Tweaks][Interface Tweaks:1]]
 ;; Emacs Interface
 (setq inhibit-startup-message t)
 (tool-bar-mode -1)
@@ -366,7 +366,7 @@ narrowed."
 (setq use-dialog-box nil)
 ;; Interface Tweaks:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Editing%20Tweaks][Editing Tweaks:1]]
+;; [[file:~/.emacs.d/README.org::*Editing%20Tweaks][Editing Tweaks:1]]
 ;; deletes all the whitespace when you hit backspace or delete
 (use-package hungry-delete
   :ensure t
@@ -425,7 +425,7 @@ narrowed."
 (delete-selection-mode t)
 ;; Editing Tweaks:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Javascript][Javascript:1]]
+;; [[file:~/.emacs.d/README.org::*Javascript][Javascript:1]]
 (use-package js2-mode
 :ensure t
 :ensure ac-js2
@@ -490,7 +490,7 @@ narrowed."
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 ;; Javascript:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Keybindings][Keybindings:1]]
+;; [[file:~/.emacs.d/README.org::*Keybindings][Keybindings:1]]
 (use-package key-chord
 :ensure t
 :config
@@ -544,7 +544,7 @@ narrowed."
 (key-chord-define-global "vv" 'save-buffers-kill-terminal)
 ;; Keybindings:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Org%20mode][Org mode:1]]
+;; [[file:~/.emacs.d/README.org::*Org%20mode][Org mode:1]]
 (use-package org
   :ensure t
   :pin org)
@@ -650,12 +650,12 @@ narrowed."
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 ;; Org mode:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Origami%20Folding][Origami Folding:1]]
+;; [[file:~/.emacs.d/README.org::*Origami%20Folding][Origami Folding:1]]
 (use-package origami
   :ensure t)
 ;; Origami Folding:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*PDF%20tools][PDF tools:1]]
+;; [[file:~/.emacs.d/README.org::*PDF%20tools][PDF tools:1]]
 (use-package pdf-tools
 :ensure t)
 (use-package org-pdfview
@@ -665,7 +665,7 @@ narrowed."
 (require 'org-pdfview)
 ;; PDF tools:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Projectile][Projectile:1]]
+;; [[file:~/.emacs.d/README.org::*Projectile][Projectile:1]]
 (use-package projectile
       :ensure t
       :bind ("C-c p" . projectile-command-map)
@@ -691,7 +691,7 @@ narrowed."
 )
 ;; Projectile:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Python][Python:1]]
+;; [[file:~/.emacs.d/README.org::*Python][Python:1]]
 (setq py-python-command "python3")
 (setq python-shell-interpreter "python3")
 (use-package elpy
@@ -704,7 +704,7 @@ narrowed."
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 ;; Python:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Rust][Rust:1]]
+;; [[file:~/.emacs.d/README.org::*Rust][Rust:1]]
 (use-package rust-mode
   :ensure t)
 (use-package flymake-rust
@@ -746,7 +746,7 @@ narrowed."
 ;;       (add-hook 'rustic-mode-hook #'rainbow-delimiters-mode))
 ;; Rust:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Searching][Searching:1]]
+;; [[file:~/.emacs.d/README.org::*Searching][Searching:1]]
 (use-package ag
     :ensure t)
 (setq ag-highlight-search t)
@@ -766,7 +766,7 @@ narrowed."
  '(anzu-replace-to-string-separator " => "))
 ;; Searching:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*SmartParens][SmartParens:1]]
+;; [[file:~/.emacs.d/README.org::*SmartParens][SmartParens:1]]
 (use-package smartparens
     :ensure t
     :config
@@ -827,7 +827,7 @@ narrowed."
     ))
 ;; SmartParens:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Swiper%20/%20Ivy%20/%20Counsel][Swiper / Ivy / Counsel:1]]
+;; [[file:~/.emacs.d/README.org::*Swiper%20/%20Ivy%20/%20Counsel][Swiper / Ivy / Counsel:1]]
 (use-package counsel
 :ensure t
 :bind
@@ -861,7 +861,7 @@ narrowed."
   ))
 ;; Swiper / Ivy / Counsel:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Themes%20and%20Visual%20settings][Themes and Visual settings:1]]
+;; [[file:~/.emacs.d/README.org::*Themes%20and%20Visual%20settings][Themes and Visual settings:1]]
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
 (load-theme 'nord t)
 ;; Reduce speed of the mouse wheel
@@ -946,12 +946,12 @@ narrowed."
 (add-hook 'python-mode-hook 'highlight-operators-mode)
 ;; Themes and Visual settings:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*TOML][TOML:1]]
+;; [[file:~/.emacs.d/README.org::*TOML][TOML:1]]
 (use-package toml-mode
   :ensure t)
 ;; TOML:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Treemacs][Treemacs:1]]
+;; [[file:~/.emacs.d/README.org::*Treemacs][Treemacs:1]]
 (use-package treemacs
   :ensure t
   :defer t
@@ -990,12 +990,12 @@ narrowed."
     :ensure t)
 ;; Treemacs:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Try][Try:1]]
+;; [[file:~/.emacs.d/README.org::*Try][Try:1]]
 (use-package try
     :ensure t)
 ;; Try:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Web%20Mode][Web Mode:1]]
+;; [[file:~/.emacs.d/README.org::*Web%20Mode][Web Mode:1]]
 (use-package web-mode
 :ensure t
 :config
@@ -1025,21 +1025,21 @@ narrowed."
 )))
 ;; Web Mode:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Which%20Key][Which Key:1]]
+;; [[file:~/.emacs.d/README.org::*Which%20Key][Which Key:1]]
 (use-package which-key
     :ensure t
     :config
       (which-key-mode))
 ;; Which Key:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*YAML][YAML:1]]
+;; [[file:~/.emacs.d/README.org::*YAML][YAML:1]]
 (use-package yaml-mode
   :ensure t
   :mode ("\\.yml\\'"
          "\\.yaml\\'"))
 ;; YAML:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*Yasnippet][Yasnippet:1]]
+;; [[file:~/.emacs.d/README.org::*Yasnippet][Yasnippet:1]]
 (use-package yasnippet
   :ensure t
   :init
@@ -1049,12 +1049,12 @@ narrowed."
 (yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
 ;; Yasnippet:1 ends here
 
-;; [[file:~/.emacs.d/myinit.org::*MARKDOWN%20mode][MARKDOWN mode:1]]
+;; [[file:~/.emacs.d/README.org::*MARKDOWN%20mode][MARKDOWN mode:1]]
 (use-package markdown-mode
-:ensure t
-:commands (markdown-mode gfm-mode)
-:mode (("README\\.md\\'" . gfm-mode)
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
        ("\\.md\\'" . markdown-mode)
        ("\\.markdown\\'" . markdown-mode))
-:init (setq markdown-command "multimarkdown"))
+  :init (setq markdown-command "multimarkdown"))
 ;; MARKDOWN mode:1 ends here
